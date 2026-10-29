@@ -1,0 +1,1295 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Master's Technologies 360 Virtual Tours — Available across India and beyond</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&family=Poppins:wght@400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="hark.css" />
+    <link rel="stylesheet" href="hark-hero.css" />
+    <style>
+      :root {
+        --ink: #050a1e;
+        --ink-2: #0a1230;
+        --cyan: #00e1ff;
+        --violet: #b44cff;
+        --line: rgba(255, 255, 255, 0.12);
+        --glass: rgba(14, 22, 54, 0.82);
+        --dim: rgba(255, 255, 255, 0.66);
+        --grad: linear-gradient(100deg, var(--cyan), var(--violet));
+      }
+      html { scroll-behavior: smooth; scroll-padding-top: 86px; }
+      body {
+        background: var(--ink);
+        color: #fff;
+        font-family: Poppins, "Geist", system-ui, -apple-system, Segoe UI, sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+        overflow-x: hidden;
+      }
+      .page.x-page { max-width: none; padding: 0; display: block; }
+      .x-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.55; }
+      .x-page > * { position: relative; z-index: 1; }
+      .x-page > .x-bg { position: fixed; inset: 0; z-index: 0; display: block; }
+      .x-wrap { width: min(1180px, 100% - 36px); margin-inline: auto; }
+      section { scroll-margin-top: 86px; }
+      .x-sec { padding: 72px 0; }
+      .x-eyebrow {
+        display: inline-flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 0.14em;
+        text-transform: uppercase; color: var(--cyan); border: 1px solid rgba(0, 225, 255, 0.38);
+        border-radius: 999px; padding: 7px 14px; background: rgba(4, 30, 52, 0.85);
+      }
+      .x-h2 { font-size: clamp(27px, 4.4vw, 42px); line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; margin: 16px 0 10px; }
+      .x-sub { color: var(--dim); max-width: 62ch; font-size: 15.5px; }
+      .x-grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: var(--cyan); -webkit-text-fill-color: transparent; }
+      .x-card {
+        background: var(--glass); border: 1px solid var(--line); border-radius: 20px;
+        -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); position: relative;
+      }
+      .x-card::after {
+        content: ""; position: absolute; inset: -1px; border-radius: inherit; pointer-events: none;
+        background: var(--grad); opacity: 0; transition: opacity 0.35s ease;
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor; mask-composite: exclude; padding: 1px;
+      }
+      .x-card:hover::after { opacity: 0.85; }
+      /* buttons */
+      .x-btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 48px;
+        padding: 12px 22px; border-radius: 999px; font: inherit; font-weight: 600; font-size: 15px;
+        text-decoration: none; color: #fff; border: 1px solid var(--line); background: rgba(18, 28, 66, 0.85);
+        cursor: pointer; transition: transform 0.25s var(--ease-out, ease), box-shadow 0.25s ease, background 0.25s ease;
+      }
+      .x-btn:hover { transform: translateY(-2px); background: rgba(28, 40, 88, 0.92); }
+      .x-btn--on {
+        color: #040a1c; border: 0; background-color: var(--cyan); background-image: var(--grad); background-size: 220% 100%;
+        box-shadow: 0 10px 34px rgba(0, 225, 255, 0.25); animation: shimmer 5s linear infinite;
+      }
+      .x-btn--on:hover { box-shadow: 0 14px 40px rgba(180, 76, 255, 0.4); }
+      @keyframes shimmer { to { background-position: 220% 0; } }
+      /* nav */
+      .x-nav {
+        position: sticky; top: 0; z-index: 60; background: rgba(5, 10, 30, 0.72);
+        -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+        border-bottom: 1px solid transparent; transition: padding 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+      }
+      .x-nav.is-stuck { border-bottom-color: var(--line); background: rgba(5, 10, 30, 0.92); }
+      .x-nav__in { display: flex; align-items: center; gap: 14px; padding: 14px 0; transition: padding 0.3s ease; }
+      .x-nav.is-stuck .x-nav__in { padding: 8px 0; }
+      .x-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; min-height: 44px; }
+      .x-logo img { width: 42px; height: 42px; object-fit: contain; mix-blend-mode: screen; transition: width 0.3s ease, height 0.3s ease; }
+      .x-nav.is-stuck .x-logo img { width: 34px; height: 34px; }
+      .x-logo span { font-weight: 600; font-size: 14px; line-height: 1.2; }
+      .x-logo small { display: block; color: var(--cyan); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; }
+      .x-navlinks { display: flex; gap: 4px; margin-left: auto; }
+      .x-navlinks a {
+        text-decoration: none; color: var(--dim); font-size: 14px; padding: 10px 12px; border-radius: 999px;
+        transition: color 0.2s ease, background 0.2s ease;
+      }
+      .x-navlinks a:hover, .x-navlinks a.is-active { color: #fff; background: rgba(24, 36, 82, 0.95); }
+      .x-nav .x-btn { min-height: 44px; padding: 10px 18px; }
+      @media (max-width: 900px) {
+        .x-navlinks { display: none; }
+        .x-nav .x-btn { margin-left: auto; }
+      }
+      /* hero */
+      .x-hero { position: relative; min-height: 100svh; display: flex; align-items: center; overflow: hidden; }
+      .x-hero__bgwrap { position: absolute; inset: 0; z-index: 0; overflow: hidden; cursor: grab; touch-action: pan-y; background: #0a1230; }
+      .x-hero__bgwrap.is-drag { cursor: grabbing; }
+      .x-hero__poster, .x-hero__gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+      .x-hero__poster { object-fit: cover; object-position: 50% 55%; opacity: 1; z-index: 0; }
+      .x-hero__gl { z-index: 1; opacity: 0; transition: opacity .6s cubic-bezier(.2,.7,.3,1); }
+      .x-hero__gl.is-on { opacity: 1; }
+      .x-hero__src { display: none; }
+      .x-pano {
+        position: absolute; right: 18px; bottom: 18px; z-index: 2; display: inline-flex; align-items: center; gap: 8px;
+        min-height: 44px; max-width: calc(100% - 36px); padding: 10px 16px; border-radius: 999px;
+        font-size: 12.5px; line-height: 1.3; color: #fff; text-decoration: none;
+        background: rgba(14, 22, 54, 0.6); border: 1px solid var(--line);
+        -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); transition: background .2s ease, border-color .2s ease;
+      }
+      .x-pano:hover, .x-pano:focus-visible { background: rgba(14, 22, 54, 0.85); border-color: rgba(0, 225, 255, 0.45); }
+      .x-pano b { color: var(--cyan); font-weight: 600; }
+      @media (max-width: 700px) { .x-pano { bottom: 70px; right: 18px; } }
+      .x-hero__veil {
+        position: absolute; inset: 0; z-index: 1;
+        background: linear-gradient(0deg, rgba(5, 10, 30, 0.6) 0%, rgba(5, 10, 30, 0) 32%),
+          linear-gradient(90deg, rgba(5, 10, 30, 0.7) 0%, rgba(5, 10, 30, 0.55) 30%, rgba(5, 10, 30, 0.2) 60%, rgba(5, 10, 30, 0.15) 100%);
+      }
+      @media (max-width: 900px) {
+        .x-hero__veil { background: linear-gradient(0deg, rgba(5, 10, 30, 0.72) 0%, rgba(5, 10, 30, 0.5) 45%, rgba(5, 10, 30, 0.18) 75%, rgba(5, 10, 30, 0.15) 100%); }
+      }
+      .x-hero h1, .x-hero__sub, .x-hero .x-eyebrow { text-shadow: 0 2px 18px rgba(5, 10, 30, 0.65); }
+      .x-hero__in, .x-hint { z-index: 2; }
+      .x-hero__veil, .x-hint, .x-hero__in { pointer-events: none; }
+      .x-hero__in a { pointer-events: auto; }
+      .x-hero__in { position: relative; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 24px; align-items: center; padding: 110px 0 120px; }
+      .x-hero h1 { font-size: clamp(34px, 6.4vw, 66px); line-height: 1.04; font-weight: 700; letter-spacing: -0.03em; margin: 20px 0 16px; }
+      .x-hero__sub { color: rgba(255, 255, 255, 0.82); font-size: clamp(15px, 2.2vw, 19px); max-width: 44ch; }
+      .x-hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+      .x-word { display: inline-block; opacity: 0; transform: translateY(26px); animation: rise 0.7s var(--ease-out, cubic-bezier(.2,.7,.3,1)) forwards; }
+      @keyframes rise { to { opacity: 1; transform: none; } }
+      .x-fade { opacity: 0; transform: translateY(22px); animation: rise 0.8s cubic-bezier(.2,.7,.3,1) forwards; }
+      /* sphere + floaters */
+      .x-stage { position: relative; height: 420px; display: grid; place-items: center; perspective: 900px; }
+      .x-sphere { width: min(360px, 74vw); aspect-ratio: 1; position: relative; transform-style: preserve-3d; animation: spin 22s linear infinite; }
+      @keyframes spin { to { transform: rotateY(360deg); } }
+      .x-sphere i {
+        position: absolute; inset: 0; border: 1px solid rgba(0, 225, 255, 0.4); border-radius: 50%;
+        box-shadow: 0 0 22px rgba(0, 225, 255, 0.18) inset;
+      }
+      .x-sphere i:nth-child(1) { transform: rotateY(0deg); }
+      .x-sphere i:nth-child(2) { transform: rotateY(30deg); }
+      .x-sphere i:nth-child(3) { transform: rotateY(60deg); }
+      .x-sphere i:nth-child(4) { transform: rotateY(90deg); border-color: rgba(180, 76, 255, 0.45); }
+      .x-sphere i:nth-child(5) { transform: rotateY(120deg); }
+      .x-sphere i:nth-child(6) { transform: rotateY(150deg); }
+      .x-sphere i:nth-child(7) { transform: rotateX(90deg); }
+      .x-sphere i:nth-child(8) { transform: rotateX(90deg) translateZ(26%) scale(0.965); }
+      .x-sphere i:nth-child(9) { transform: rotateX(90deg) translateZ(-26%) scale(0.965); }
+      .x-sphere i:nth-child(10) { transform: rotateX(90deg) translateZ(44%) scale(0.88); border-color: rgba(180, 76, 255, 0.4); }
+      .x-sphere i:nth-child(11) { transform: rotateX(90deg) translateZ(-44%) scale(0.88); border-color: rgba(180, 76, 255, 0.4); }
+      .x-float {
+        position: absolute; width: 52px; height: 52px; display: grid; place-items: center; border-radius: 16px;
+        background: rgba(5, 10, 30, 0.72); border: 1px solid var(--line); color: var(--cyan);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45); animation: bob 5s ease-in-out infinite;
+      }
+      .x-float:nth-of-type(2) { color: var(--violet); }
+      @keyframes bob { 50% { transform: translateY(-16px); } }
+      .x-f1 { top: 6%; left: 2%; } .x-f2 { top: 22%; right: 0; animation-delay: 0.8s; }
+      .x-f3 { bottom: 14%; left: 6%; animation-delay: 1.5s; } .x-f4 { bottom: 4%; right: 10%; animation-delay: 2.2s; }
+      .x-hint {
+        position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; align-items: center;
+        gap: 10px; color: var(--dim); font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase;
+      }
+      .x-hint span.x-mouse { width: 22px; height: 34px; border: 1px solid var(--line); border-radius: 12px; position: relative; }
+      .x-hint span.x-mouse::after {
+        content: ""; position: absolute; left: 50%; top: 7px; width: 3px; height: 7px; border-radius: 2px;
+        background: var(--cyan); transform: translateX(-50%); animation: wheel 1.8s ease-in-out infinite;
+      }
+      @keyframes wheel { 50% { transform: translate(-50%, 11px); opacity: 0.3; } }
+      @media (max-width: 900px) {
+        .x-hero__in { grid-template-columns: 1fr; padding: 92px 0 110px; }
+        .x-stage { height: 260px; order: -1; }
+        .x-sphere { width: 200px; }
+        .x-float { width: 44px; height: 44px; }
+      }
+      /* stats */
+      .x-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+      .x-stat { padding: 24px 18px; text-align: center; border-radius: 18px; }
+      .x-stat b { display: block; font-size: clamp(28px, 5vw, 44px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+      .x-stat span { color: var(--dim); font-size: 13px; }
+      @media (max-width: 720px) { .x-stats { grid-template-columns: repeat(2, 1fr); } }
+      /* reveal */
+      .r { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.2,.7,.3,1); }
+      .r.in { opacity: 1; transform: none; }
+      /* flip cards */
+      .x-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      @media (max-width: 960px) { .x-grid3 { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 600px) { .x-grid3 { grid-template-columns: 1fr; } }
+      .x-flip { perspective: 1200px; min-height: 210px; background: none; border: 0; padding: 0; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+      .x-flip__in { position: relative; width: 100%; height: 100%; min-height: 210px; transition: transform 0.7s cubic-bezier(.2,.8,.3,1); transform-style: preserve-3d; }
+      .x-flip.is-flip .x-flip__in { transform: rotateY(180deg); }
+      @media (hover: hover) and (pointer: fine) { .x-flip:hover:not(.is-flip) .x-flip__in { transform: rotateY(180deg); } }
+      .x-flip__f, .x-flip__b {
+        position: absolute; inset: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden;
+        border-radius: 20px; border: 1px solid var(--line); padding: 24px; display: flex; flex-direction: column; justify-content: center; gap: 12px;
+        background: var(--glass); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+      }
+      .x-flip__b { transform: rotateY(180deg); background: linear-gradient(150deg, rgba(0, 225, 255, 0.14), rgba(180, 76, 255, 0.16)); color: rgba(255,255,255,.92); font-size: 15px; }
+      .x-flip h3 { font-size: 20px; font-weight: 600; }
+      .x-ico { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 14px; background: rgba(0, 225, 255, 0.1); color: var(--cyan); border: 1px solid rgba(0, 225, 255, 0.3); }
+      .x-flip__hint { font-size: 12px; color: var(--dim); }
+      /* before/after */
+      .x-ba { position: relative; border-radius: 22px; overflow: hidden; border: 1px solid var(--line); user-select: none; touch-action: pan-y; }
+      .x-ba__pane { padding: 30px 24px; min-height: 290px; display: grid; place-items: center; }
+      .x-ba__after { position: absolute; inset: 0; clip-path: inset(0 0 0 50%); background: radial-gradient(100% 100% at 70% 20%, rgba(180,76,255,.2), rgba(5,10,30,.9)); }
+      .x-ba__before { background: #11162b; }
+      .x-handle { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--grad); cursor: ew-resize; }
+      .x-handle::after {
+        content: "⟷"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 46px; height: 46px;
+        border-radius: 50%; background: var(--ink-2); border: 1px solid var(--cyan); display: grid; place-items: center;
+        box-shadow: 0 0 24px rgba(0, 225, 255, 0.45); font-size: 17px;
+      }
+      .x-mock { width: min(360px, 100%); border-radius: 16px; padding: 16px; background: rgba(22, 32, 70, 0.95); border: 1px solid var(--line); }
+      .x-mock--on { border-color: rgba(0,225,255,.5); box-shadow: 0 0 40px rgba(0,225,255,.22); }
+      .x-mock h4 { margin: 0 0 4px; font-size: 16px; font-weight: 600; }
+      .x-mock p { font-size: 13px; color: var(--dim); }
+      .x-mock__shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 12px 0; }
+      .x-mock__shots i { display: block; height: 42px; border-radius: 8px; background: rgba(255,255,255,.1); }
+      .x-mock--on .x-mock__shots i { background: linear-gradient(140deg, rgba(0,225,255,.5), rgba(180,76,255,.5)); }
+      .x-tag { display: inline-block; font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--dim); }
+      .x-tag--on { color: #040a1c; background-color: var(--cyan); background-image: var(--grad); border: 0; font-weight: 600; }
+      .x-balabel { position: absolute; top: 12px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); }
+      /* tours */
+      /* featured 360 panel */
+      .x-fpano { position: relative; aspect-ratio: 16 / 9; border-radius: 26px; overflow: hidden; margin-bottom: 28px; border: 1px solid var(--line); background: var(--ink-2); }
+      .x-fpano__view { position: absolute; inset: 0; cursor: grab; touch-action: pan-y; }
+      .x-fpano__view.is-drag { cursor: grabbing; }
+      .x-fpano__poster, .x-fpano__gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+      .x-fpano__poster { object-fit: cover; object-position: 50% 55%; }
+      .x-fpano__gl { opacity: 0; transition: opacity 1.2s cubic-bezier(.2,.7,.3,1); }
+      .x-fpano__gl.is-on { opacity: 1; }
+      .x-fpano__src { display: none; }
+      .x-fpano__cap {
+        position: absolute; left: 18px; bottom: 18px; z-index: 2; max-width: min(440px, calc(100% - 36px)); padding: 16px 18px;
+        border-radius: 20px; background: rgba(14, 22, 54, 0.62); border: 1px solid var(--line);
+        -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); pointer-events: none;
+      }
+      .x-fpano__cap a { pointer-events: auto; margin-top: 12px; min-height: 44px; padding: 10px 18px; font-size: 14px; }
+      .x-fpano__label { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cyan); }
+      .x-fpano__cap h3 { font-size: clamp(18px, 2.4vw, 24px); line-height: 1.2; font-weight: 600; margin: 4px 0 2px; }
+      .x-fpano__sub { color: var(--dim); font-size: 13px; }
+      .x-fpano__hint {
+        position: absolute; top: 16px; right: 16px; z-index: 2; display: inline-flex; align-items: center; gap: 8px;
+        padding: 8px 14px; border-radius: 999px; font-size: 12px; color: #fff; pointer-events: none;
+        background: rgba(14, 22, 54, 0.6); border: 1px solid var(--line);
+        -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); transition: opacity .6s ease;
+      }
+      .x-fpano__hint svg { color: var(--cyan); }
+      .x-fpano__hint.is-gone { opacity: 0; }
+      @media (max-width: 700px) {
+        .x-fpano { aspect-ratio: 4 / 3; border-radius: 20px; }
+        .x-fpano__cap { left: 10px; right: 10px; bottom: 10px; max-width: none; padding: 12px 14px; }
+        .x-fpano__cap a { margin-top: 8px; }
+        .x-fpano__hint { top: 10px; right: 10px; }
+      }
+      .x-filters { display: flex; flex-wrap: wrap; gap: 9px; margin: 26px 0 22px; }
+      .x-pill {
+        border: 1px solid var(--line); background: #121c42; color: #c9d4ec; border-radius: 999px;
+        padding: 10px 16px; min-height: 44px; font: inherit; font-size: 13.5px; cursor: pointer; transition: transform .25s ease;
+      }
+      .x-pill:hover { color: #fff; transform: translateY(-2px); }
+      .x-pill.is-on { color: #040a1c; background-color: var(--cyan); background-image: var(--grad); border-color: transparent; font-weight: 600; }
+      .x-spacechips .x-pill { flex: none; display: inline-flex; align-items: center; gap: 8px; }
+      .x-pill__n { font-size: 12px; font-weight: 600; min-width: 22px; padding: 1px 7px; border-radius: 999px; background: #26336a; color: #ffffff; text-align: center; }
+      .x-pill.is-on .x-pill__n { background: #040a1c; color: #ffffff; }
+      @media (max-width: 760px) {
+        .x-spacechips { flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin-left: -18px; margin-right: -18px; padding: 4px 18px; }
+        .x-spacechips::-webkit-scrollbar { display: none; }
+        .x-spacechips .x-pill { scroll-snap-align: start; }
+      }
+      .x-space .x-cover__img { object-fit: cover; object-position: center center; opacity: 1; z-index: 0; }
+      .x-spacepanos { display: none; }
+      .x-spacenote { margin-top: 22px; color: var(--dim); font-size: 14px; }
+      .x-spacenote a { color: inherit; text-decoration: underline; text-underline-offset: 3px; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 0 4px; vertical-align: middle; }
+      .x-spacenote a:hover { color: #fff; }
+      .x-tours { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      @media (max-width: 960px) { .x-tours { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 620px) { .x-tours { grid-template-columns: 1fr; } }
+      /* 2-column layout: an odd last card spans the row so no empty slot shows */
+      @media (min-width: 621px) and (max-width: 960px) {
+        .x-tour.x-tour--wide { grid-column: 1 / -1; }
+        .x-tour--wide .x-cover { aspect-ratio: 21 / 9; }
+      }
+      .x-tour { padding: 0; overflow: hidden; display: flex; flex-direction: column; transition: transform .3s ease; transform-style: preserve-3d; }
+      .x-tour.is-out { display: none; }
+      .x-tour.is-in { animation: pop .5s cubic-bezier(.2,.8,.3,1) both; }
+      @keyframes pop { from { opacity: 0; transform: translateY(18px) scale(.96); } }
+      .x-cover { position: relative; aspect-ratio: 16/10; display: grid; place-items: center; overflow: hidden; }
+      .x-cover__ico { position: absolute; right: -14px; bottom: -18px; opacity: .25; color: #fff; }
+      .x-ring {
+        width: 104px; height: 104px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 19px;
+        border: 1px dashed rgba(255,255,255,.75); animation: spin2 14s linear infinite; letter-spacing: .02em;
+      }
+      @keyframes spin2 { to { transform: rotate(360deg); } }
+      .x-ring span { animation: spin2 14s linear infinite reverse; }
+      .x-tour__body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+      .x-tour__body h3 { font-size: 17px; font-weight: 600; }
+      .x-tour__place { color: var(--dim); font-size: 13px; }
+      a.x-tour { color: inherit; text-decoration: none; cursor: pointer; }
+      .x-cover { background-color: #0a1230; }
+      .x-cover__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .6s ease; }
+      a.x-tour:hover .x-cover__img { transform: scale(1.05); }
+      .x-cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,10,30,.1) 0%, rgba(6,10,30,.35) 55%, rgba(6,10,30,.85) 100%); pointer-events: none; }
+      .x-cover .x-ring { position: relative; z-index: 1; text-shadow: 0 1px 6px rgba(0,0,0,.6); }
+      /* live 360 card views: poster img below, 2D canvas fed by the shared WebGL renderer (or a CSS pan) on top */
+      .x-cover__pano { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; pointer-events: none; }
+      .x-cover__gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; pointer-events: none; transition: opacity .7s ease, transform .6s ease; }
+      .x-cover__gl.is-on { opacity: 1; }
+      a.x-tour:hover .x-cover__gl { transform: scale(1.05); }
+      .x-cover__gl.is-pan { background-repeat: repeat-x; background-size: auto 100%; background-position: 0 50%; animation: x-pan 50s linear infinite; }
+      @keyframes x-pan { from { background-position: 0 50%; } to { background-position: calc(-1 * var(--pw, 640px)) 50%; } }
+      .x-hidden .x-cover__gl.is-pan, .x-hidden .x-360 svg { animation-play-state: paused; }
+      .x-360 { position: absolute; left: 12px; top: 12px; z-index: 2; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px 5px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: .02em; color: #fff; background: rgba(6,10,30,.55); border: 1px solid rgba(255,255,255,.28); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); pointer-events: none; }
+      .x-360 svg { animation: spin2 6s linear infinite; }
+      @media (prefers-reduced-motion: reduce) { .x-360 svg { animation: none; } }
+      .x-tour__acts { margin-top: auto; display: flex; flex-direction: column; gap: 8px; padding-top: 6px; }
+      .x-tour__acts .x-btn { width: 100%; }
+      .x-tour__peek { min-height: 44px; font: inherit; font-size: 13.5px; cursor: pointer; }
+      /* modal */
+      .x-modal { position: fixed; inset: 0; z-index: 90; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(3, 6, 18, 0.88); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+      .x-modal.is-open { display: flex; animation: fadein .3s ease; }
+      @keyframes fadein { from { opacity: 0; } }
+      .x-modal__box { width: min(1060px, 100%); max-height: 92vh; overflow: auto; border-radius: 22px; background: var(--ink-2); border: 1px solid var(--line); padding: 16px; }
+      .x-modal__head { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
+      .x-modal__head h3 { font-size: 19px; font-weight: 600; }
+      .x-modal__close, .x-modal__nav { margin-left: auto; }
+      .x-modal iframe { width: 100%; height: min(62vh, 520px); border: 0; border-radius: 16px; background: #060c22; display: block; }
+      .x-modal__foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 12px; }
+      .x-iconbtn { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); background: rgba(18, 28, 66, 0.9); color: #fff; cursor: pointer; font-size: 18px; }
+      .x-iconbtn:hover { background: rgba(30, 44, 96, 0.95); }
+      /* industries */
+      .x-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+      @media (max-width: 760px) { .x-tiles { grid-template-columns: repeat(2, 1fr); } }
+      .x-tile { padding: 22px 18px; border-radius: 18px; text-align: left; cursor: pointer; color: inherit; font: inherit; display: flex; flex-direction: column; gap: 8px; transition: transform .3s ease, box-shadow .3s ease; }
+      .x-tile:hover { transform: translateY(-4px); box-shadow: 0 18px 44px rgba(0, 225, 255, 0.16); }
+      .x-tile b { font-size: 16px; font-weight: 600; }
+      .x-tile em { font-style: normal; color: var(--cyan); font-size: 13px; }
+      .x-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+      /* process */
+      .x-proc { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 28px; align-items: center; }
+      @media (max-width: 900px) { .x-proc { grid-template-columns: 1fr; } }
+      .x-proc img { border-radius: 20px; border: 1px solid var(--line); }
+      .x-track { position: relative; display: grid; gap: 18px; padding-left: 38px; }
+      .x-track::before { content: ""; position: absolute; left: 13px; top: 6px; bottom: 6px; width: 2px; background: rgba(255,255,255,.12); }
+      .x-track__fill { position: absolute; left: 13px; top: 6px; width: 2px; height: 0; background: var(--grad); box-shadow: 0 0 14px rgba(0,225,255,.6); transition: height .25s linear; }
+      .x-step { position: relative; }
+      .x-step::before {
+        content: ""; position: absolute; left: -32px; top: 6px; width: 16px; height: 16px; border-radius: 50%;
+        background: var(--ink); border: 2px solid var(--cyan); box-shadow: 0 0 16px rgba(0,225,255,.5);
+      }
+      .x-step b { display: block; font-size: 17px; font-weight: 600; }
+      .x-step span { color: var(--dim); font-size: 14.5px; }
+      .x-step em { font-style: normal; color: var(--violet); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+      /* faq */
+      .x-faq { display: grid; gap: 10px; }
+      .x-q { width: 100%; text-align: left; font: inherit; font-size: 16px; font-weight: 500; color: #fff; background: none; border: 0; padding: 18px 20px; cursor: pointer; display: flex; gap: 14px; align-items: center; min-height: 56px; }
+      .x-q::after { content: "+"; margin-left: auto; color: var(--cyan); font-size: 22px; transition: transform .3s ease; }
+      .x-item.is-open .x-q::after { transform: rotate(45deg); }
+      .x-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s ease; }
+      .x-item.is-open .x-a { grid-template-rows: 1fr; }
+      .x-a > div { overflow: hidden; }
+      .x-a p { padding: 0 20px 18px; color: var(--dim); font-size: 15px; }
+      /* contact */
+      .x-contact { text-align: center; }
+      .x-contact img.x-biglogo { width: 120px; margin: 0 auto 18px; mix-blend-mode: screen; }
+      .x-cards2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 28px; text-align: left; }
+      @media (max-width: 700px) { .x-cards2 { grid-template-columns: 1fr; } }
+      .x-person { padding: 24px; border-radius: 20px; display: flex; flex-direction: column; gap: 10px; }
+      .x-person b { font-size: 18px; font-weight: 600; }
+      .x-person .x-num { font-size: 22px; font-weight: 700; letter-spacing: .02em; }
+      .x-person .x-row { display: flex; gap: 10px; flex-wrap: wrap; }
+      .x-pulse { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; color: var(--cyan); background: rgba(0,225,255,.1); animation: pulse 2.4s ease-out infinite; }
+      @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0,225,255,.45); } 70%, 100% { box-shadow: 0 0 0 16px rgba(0,225,255,0); } }
+      .x-cards2.x-cards3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      @media (max-width: 900px) { .x-cards2.x-cards3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .x-cards3 .x-mail { grid-column: 1 / -1; } }
+      @media (max-width: 700px) { .x-cards2.x-cards3 { grid-template-columns: 1fr; } }
+      .x-person { min-width: 0; }
+      .x-person .x-addr { font-size: 16px; font-weight: 600; line-height: 1.35; overflow-wrap: anywhere; word-break: break-word; min-height: 30px; display: flex; align-items: center; }
+      .x-mail .x-pulse svg { animation: envbob 2.4s ease-in-out infinite; }
+      @keyframes envbob { 0%, 100% { transform: translateY(0) rotate(0); } 20% { transform: translateY(-3px) rotate(-8deg); } 40% { transform: translateY(0) rotate(6deg); } 60% { transform: rotate(0); } }
+      @media (prefers-reduced-motion: reduce) { .x-mail .x-pulse svg { animation: none; } }
+      .x-foot .x-footmail { display: inline-flex; align-items: center; min-height: 44px; overflow-wrap: anywhere; }
+      /* footer + float */
+      .x-foot { border-top: 1px solid var(--line); padding: 34px 0 96px; color: var(--dim); font-size: 13.5px; }
+      .x-foot__in { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
+      .x-foot a { color: var(--dim); text-decoration: none; }
+      .x-foot nav { display: flex; flex-wrap: wrap; gap: 4px; }
+      .x-foot nav a { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; padding: 0 10px; }
+      .x-foot a:hover { color: #fff; }
+      .x-wa {
+        position: fixed; right: 18px; bottom: 18px; z-index: 70; width: 58px; height: 58px; border-radius: 50%;
+        display: grid; place-items: center; background: #25d366; color: #04210f; box-shadow: 0 14px 34px rgba(37, 211, 102, .4);
+        animation: pulse2 2.2s ease-out infinite;
+      }
+      @keyframes pulse2 { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,.5); } 70%, 100% { box-shadow: 0 0 0 20px rgba(37,211,102,0); } }
+      /* hero corner logo */
+      .x-herologo {
+        position: absolute; top: 20px; right: 20px; z-index: 3; width: 136px; aspect-ratio: 1; pointer-events: none;
+        border-radius: 50%; background: radial-gradient(closest-side, rgba(10, 18, 48, .55), rgba(10, 18, 48, 0) 100%);
+      }
+      .x-herologo video {
+        display: block; width: 100%; height: 100%; object-fit: contain; background: transparent;
+        /* light feather: fully opaque except the outermost ~7% of each edge */
+        -webkit-mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 7%, #000 93%, transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 7%, #000 93%, transparent 100%);
+        -webkit-mask-composite: source-in; mask-composite: intersect;
+        -webkit-mask-size: 100% 100%; mask-size: 100% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+      }
+      /* top-right sits in the empty band above the hero grid (padding-top 110 / 92), below the sticky nav,
+         clear of the right-hand floaters (x-f2 starts ~200px down) and the bottom drag hint / pano link */
+      @media (max-width: 900px) {
+        .x-herologo { top: 16px; right: 16px; width: 80px; }
+      }
+      ::selection { background: rgba(0, 225, 255, .35); }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+        .r { opacity: 1; transform: none; }
+        .x-word, .x-fade { opacity: 1; transform: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page x-page" id="top">
+      <canvas class="x-bg" id="bgfx" aria-hidden="true"></canvas>
+
+      <header class="x-nav" id="nav">
+        <div class="x-wrap x-nav__in">
+          <a class="x-logo" href="#top">
+            <img src="logo.png" alt="Master's Technologies Digital 360 logo" />
+            <span>Master's Technologies<small>Digital 360</small></span>
+          </a>
+          <nav class="x-navlinks" id="navlinks">
+            <a href="#tours">Tours</a>
+            <a href="#spaces">Spaces</a>
+            <a href="#why">Why 360°</a>
+            <a href="#industries">Industries</a>
+            <a href="#process">Process</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contact">Contact</a>
+          </nav>
+          <a class="x-btn x-btn--on" href="tel:+919048670214">Call Now</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="x-hero" id="hero">
+          <div class="x-hero__bgwrap" id="herodrag">
+            <img class="x-hero__poster" src="hero-view.jpg" alt="The Blue Serene Resorts lobby in Karuvanthala, Enamakkal, with glowing golden floral glass panels by the reception" />
+            <canvas class="x-hero__gl" id="herogl" aria-hidden="true"></canvas>
+            <img class="x-hero__src" id="heropano" src="hero-pano.jpg" alt="" aria-hidden="true" />
+          </div>
+          <div class="x-hero__veil"></div>
+          <div class="x-herologo" aria-hidden="true">
+            <video id="herologo" src="intro-logo-soft.mp4" autoplay muted loop playsinline preload="metadata"></video>
+          </div>
+          <div class="x-wrap x-hero__in">
+            <div>
+              <p class="x-eyebrow x-fade" style="animation-delay:.1s">Google Trusted Agency · Available across India and beyond</p>
+              <h1 id="heroh1">Let customers <span class="x-grad">walk inside</span> before they walk in.</h1>
+              <p class="x-hero__sub x-fade" style="animation-delay:.9s">
+                Immersive 360° Virtual Tours for your Google Business Profile — seen on Google Maps and Search.
+              </p>
+              <div class="x-hero__cta x-fade" style="animation-delay:1.05s">
+                <a class="x-btn x-btn--on" href="#tours">Explore Our Tours</a>
+                <a class="x-btn" href="https://wa.me/919048670214" target="_blank" rel="noopener">WhatsApp Us</a>
+              </div>
+            </div>
+            <div class="x-stage x-fade" style="animation-delay:.6s">
+              <div class="x-sphere" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="x-float x-f1" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg></div>
+              <div class="x-float x-f2" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1.1 5.9L12 16.4 6.7 19.2l1.1-5.9L3.5 9.2l5.9-.8L12 3Z"/></svg></div>
+              <div class="x-float x-f3" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6.5 3.5h3l1.5 4-2 1.4a12 12 0 0 0 5.6 5.6l1.4-2 4 1.5v3c0 1-.8 1.7-1.8 1.6C10.3 18.9 5.1 13.7 4.9 5.3c0-1 .7-1.8 1.6-1.8Z"/></svg></div>
+              <div class="x-float x-f4" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 8.3-6 1.3 3 5.6-2.6 1.4-3-5.6-4 4.3V3Z"/></svg></div>
+            </div>
+          </div>
+          <p class="x-hint" aria-hidden="true"><span class="x-mouse"></span> Scroll / drag to look around</p>
+          <a class="x-pano" href="https://www.google.com/maps/@10.5099897,76.0876752,3a,75y,146.02h,87.44t/data=!3m6!1e1!3m4!1sCIABIhDdPF1AtWEdiHl-hc0CDT1P!2e10!7i8000!8i4000" target="_blank" rel="noopener"><span><b>360°</b> · Blue Serene Resorts, Karuvanthala, Enamakkal — drag to look around</span></a>
+        </section>
+
+        <section class="x-sec" style="padding-top:44px">
+          <div class="x-wrap">
+            <div class="x-stats" id="stats">
+              <div class="x-card x-stat r"><b><span class="x-count" data-to="20" data-suffix="+">0</span></b><span>Tours completed &amp; counting</span></div>
+              <div class="x-card x-stat r"><b><span class="x-count" data-to="6">0</span></b><span>Business categories</span></div>
+              <div class="x-card x-stat r"><b><span class="x-count" data-to="360" data-suffix="°">0</span></b><span>Immersive, every corner covered</span></div>
+              <div class="x-card x-stat r"><b><span class="x-count" data-to="100">0</span>%</b><span>Published on Google Maps</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="x-sec" id="why">
+          <div class="x-wrap">
+            <p class="x-eyebrow r">Why a 360° tour?</p>
+            <h2 class="x-h2 r">Customers decide before they arrive. <span class="x-grad">Show them inside.</span></h2>
+            <p class="x-sub r">Hover or tap a card to see what a virtual tour does for your listing.</p>
+            <div class="x-grid3" style="margin-top:28px">
+              <button class="x-flip r" type="button"><div class="x-flip__in">
+                <div class="x-flip__f"><span class="x-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6l-8-3Z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span><h3>More Trust</h3><span class="x-flip__hint">Tap to flip</span></div>
+                <div class="x-flip__b">Customers see your real space, cleanliness and ambience before visiting.</div>
+              </div></button>
+              <button class="x-flip r" type="button"><div class="x-flip__in">
+                <div class="x-flip__f"><span class="x-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 3l13 7.7-5.6 1.2 2.8 5.2-2.4 1.3-2.8-5.2L7 17.2V3Z"/></svg></span><h3>More Clicks</h3><span class="x-flip__hint">Tap to flip</span></div>
+                <div class="x-flip__b">Profiles with virtual tours look complete and invite exploration.</div>
+              </div></button>
+              <button class="x-flip r" type="button"><div class="x-flip__in">
+                <div class="x-flip__f"><span class="x-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6.5 3.5h3l1.5 4-2 1.4a12 12 0 0 0 5.6 5.6l1.4-2 4 1.5v3c0 1-.8 1.7-1.8 1.6C10.3 18.9 5.1 13.7 4.9 5.3c0-1 .7-1.8 1.6-1.8Z"/></svg></span><h3>More Calls &amp; Directions</h3><span class="x-flip__hint">Tap to flip</span></div>
+                <div class="x-flip__b">Confident customers call, book and visit.</div>
+              </div></button>
+              <button class="x-flip r" type="button"><div class="x-flip__in">
+                <div class="x-flip__f"><span class="x-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><h3>Top on Maps &amp; Search</h3><span class="x-flip__hint">Tap to flip</span></div>
+                <div class="x-flip__b">A rich, active profile stands out from nearby competitors.</div>
+              </div></button>
+              <button class="x-flip r" type="button"><div class="x-flip__in">
+                <div class="x-flip__f"><span class="x-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span><h3>Open 24/7</h3><span class="x-flip__hint">Tap to flip</span></div>
+                <div class="x-flip__b">Your business is on display day and night, even when closed.</div>
+              </div></button>
+              <button class="x-flip r" type="button"><div class="x-flip__in">
+                <div class="x-flip__f"><span class="x-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="m8.2 10.8 7.6-3.6M8.2 13.2l7.6 3.6"/></svg></span><h3>Use It Everywhere</h3><span class="x-flip__hint">Tap to flip</span></div>
+                <div class="x-flip__b">Website, social media, WhatsApp, brochures and QR codes.</div>
+              </div></button>
+            </div>
+
+            <h3 class="x-h2 r" style="font-size:clamp(22px,3.4vw,30px);margin-top:56px">Same listing. <span class="x-grad">Very different first impression.</span></h3>
+            <p class="x-sub r" style="margin-bottom:20px">Drag the handle to compare.</p>
+            <div class="x-ba r" id="ba">
+              <div class="x-ba__pane x-ba__before">
+                <span class="x-balabel" style="left:16px">Before</span>
+                <div class="x-mock">
+                  <h4>Your Business</h4>
+                  <p>★★★☆☆ · Your city</p>
+                  <div class="x-mock__shots"><i></i><i></i><i></i></div>
+                  <span class="x-tag">No virtual tour</span>
+                </div>
+              </div>
+              <div class="x-ba__pane x-ba__after" id="baafter">
+                <span class="x-balabel" style="right:16px;color:var(--cyan)">After</span>
+                <div class="x-mock x-mock--on">
+                  <h4>Your Business <span class="x-tag x-tag--on">360° Virtual Tour</span></h4>
+                  <p style="color:#ffc94d">★★★★★ <span style="color:var(--dim)">· 📍 Your city</span></p>
+                  <div class="x-mock__shots"><i></i><i></i><i></i></div>
+                  <span class="x-btn x-btn--on" style="min-height:40px;padding:8px 16px;font-size:13px">See inside</span>
+                </div>
+              </div>
+              <div class="x-handle" id="bahandle" role="slider" tabindex="0" aria-label="Before and after comparison" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="x-sec" id="tours">
+          <div class="x-wrap">
+            <p class="x-eyebrow r">Our work</p>
+            <h2 class="x-h2 r">Featured tours, <span class="x-grad">live on Google Maps.</span></h2>
+            <p class="x-sub r" style="margin-bottom:24px">A selection of our 20+ tours completed — and counting — for resorts, malls, restaurants, churches, temples and shops. Open any one and walk around.</p>
+            <div class="x-fpano r" id="fpano">
+              <div class="x-fpano__view" id="fpanodrag">
+                <img class="x-fpano__poster" src="featured-view.jpg" alt="The VB Mall &amp; Cinemas auditorium in Triprayar, with rows of tan recliner seats" />
+                <canvas class="x-fpano__gl" id="fpanogl" aria-hidden="true"></canvas>
+                <img class="x-fpano__src" id="fpanosrc" src="featured-pano.jpg" alt="" aria-hidden="true" />
+              </div>
+              <p class="x-fpano__hint" id="fpanohint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10m0-1.5a1.5 1.5 0 0 1 3 0V11m0-1a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1-6 6h-.6a6 6 0 0 1-4.6-2.2L4 15.5a1.6 1.6 0 0 1 2.4-2.1L9 15"/></svg> Drag · 360°</p>
+              <div class="x-fpano__cap">
+                <p class="x-fpano__label">Featured 360 tour</p>
+                <h3>VB Mall &amp; Cinemas</h3>
+                <p class="x-fpano__sub">Triprayar, Thrissur · drag to look around</p>
+                <a class="x-btn x-btn--on" href="https://www.google.com/maps/@10.4080873,76.1114663,3a,75y,336.24h,80.33t/data=!3m6!1e1!3m4!1sCIABIhDcwprBq9k-zEw92aUCYTH8!2e10!7i8000!8i4000" target="_blank" rel="noopener">Open full tour on Google Maps ↗</a>
+              </div>
+            </div>
+            <div class="x-filters" id="filters" role="group" aria-label="Filter tours by category"></div>
+            <div class="x-tours" id="tourgrid">
+              <a class="x-card x-tour" href="https://www.google.com/maps/@10.5101911,76.0875544,3a,75y,171.56h,93.48t/data=!3m6!1e1!3m4!1sCIABIhCfwbSqYKS5lurpn1JogNj6!2e10!7i8000!8i4000" target="_blank" rel="noopener" data-cat="Hotels &amp; Resorts" data-place="Karuvanthala, Enamakkal" data-embed="https://www.google.com/maps/embed?pb=!4v1730000000000!6m8!1m7!1sCIABIhCfwbSqYKS5lurpn1JogNj6!2m2!1d10.5101911!2d76.0875544!3f171.56!4f3.48!5f0.7820865974627469" data-tilt>
+                <div class="x-cover"><img class="x-cover__img" src="t01.jpg" alt="360° preview of Blue Serene Resorts" loading="lazy" /><img class="x-cover__pano" src="p01.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><canvas class="x-cover__gl" aria-hidden="true"></canvas><span class="x-360"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/></svg>360°</span><span class="x-ring"><span>360°</span></span></div>
+                <div class="x-tour__body"><span class="x-tag" style="align-self:flex-start">Hotels &amp; Resorts</span><h3>Blue Serene Resorts</h3><p class="x-tour__place">📍 Karuvanthala, Enamakkal</p>
+                  <span class="x-tour__acts"><span class="x-btn x-btn--on">Open in Google Maps ↗</span><button class="x-btn x-tour__peek" type="button" onclick="event.preventDefault();event.stopPropagation();xOpenTour(0)">Preview here</button></span></div>
+              </a>
+              <a class="x-card x-tour" href="https://www.google.com/maps/@10.4704579,76.0923062,3a,75y,332.38h,90t/data=!3m6!1e1!3m4!1sCIABIhDlErtujOnGpGmuOsLv_5ab!2e10!7i8000!8i4000" target="_blank" rel="noopener" data-cat="Hotels &amp; Resorts" data-place="Vadanappally, Thrissur" data-embed="https://www.google.com/maps/embed?pb=!4v1730000000000!6m8!1m7!1sCIABIhDlErtujOnGpGmuOsLv_5ab!2m2!1d10.4704579!2d76.0923062!3f332.38!4f0!5f0.7820865974627469" data-tilt>
+                <div class="x-cover"><img class="x-cover__img" src="t02.jpg" alt="360° preview of Mayanadhi Resorts" loading="lazy" /><img class="x-cover__pano" src="p02.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><canvas class="x-cover__gl" aria-hidden="true"></canvas><span class="x-360"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/></svg>360°</span><span class="x-ring"><span>360°</span></span></div>
+                <div class="x-tour__body"><span class="x-tag" style="align-self:flex-start">Hotels &amp; Resorts</span><h3>Mayanadhi Resorts</h3><p class="x-tour__place">📍 Vadanappally, Thrissur</p>
+                  <span class="x-tour__acts"><span class="x-btn x-btn--on">Open in Google Maps ↗</span><button class="x-btn x-tour__peek" type="button" onclick="event.preventDefault();event.stopPropagation();xOpenTour(1)">Preview here</button></span></div>
+              </a>
+              <a class="x-card x-tour" href="https://www.google.com/maps/@10.5085537,76.1530362,3a,75y,119.89h,90.11t/data=!3m6!1e1!3m4!1sCIABIhCqm47QKDPwCY4QcUoJIt_r!2e10!7i8000!8i4000" target="_blank" rel="noopener" data-cat="Hotels &amp; Resorts" data-place="Thrissur" data-embed="https://www.google.com/maps/embed?pb=!4v1730000000000!6m8!1m7!1sCIABIhCqm47QKDPwCY4QcUoJIt_r!2m2!1d10.5085537!2d76.1530362!3f119.89!4f0.11!5f0.7820865974627469" data-tilt>
+                <div class="x-cover"><img class="x-cover__img" src="t03.jpg" alt="360° preview of Simla Resort" loading="lazy" /><img class="x-cover__pano" src="p03.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><canvas class="x-cover__gl" aria-hidden="true"></canvas><span class="x-360"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/></svg>360°</span><span class="x-ring"><span>360°</span></span></div>
+                <div class="x-tour__body"><span class="x-tag" style="align-self:flex-start">Hotels &amp; Resorts</span><h3>Simla Resort</h3><p class="x-tour__place">📍 Thrissur</p>
+                  <span class="x-tour__acts"><span class="x-btn x-btn--on">Open in Google Maps ↗</span><button class="x-btn x-tour__peek" type="button" onclick="event.preventDefault();event.stopPropagation();xOpenTour(2)">Preview here</button></span></div>
+              </a>
+              <a class="x-card x-tour" href="https://www.google.com/maps/@10.408252,76.1116845,3a,75y,61.78h,90t/data=!3m6!1e1!3m4!1sCIABIhAd58h12r_513np5Wid_IBA!2e10!7i8000!8i4000" target="_blank" rel="noopener" data-cat="Malls &amp; Cinema" data-place="Triprayar, Thrissur" data-embed="https://www.google.com/maps/embed?pb=!4v1730000000000!6m8!1m7!1sCIABIhAd58h12r_513np5Wid_IBA!2m2!1d10.408252!2d76.1116845!3f61.78!4f0!5f0.7820865974627469" data-tilt>
+                <div class="x-cover"><img class="x-cover__img" src="t04.jpg" alt="360° preview of VB Mall &amp; Cinemas" loading="lazy" /><img class="x-cover__pano" src="p04.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><canvas class="x-cover__gl" aria-hidden="true"></canvas><span class="x-360"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/></svg>360°</span><span class="x-ring"><span>360°</span></span></div>
+                <div class="x-tour__body"><span class="x-tag" style="align-self:flex-start">Malls &amp; Cinema</span><h3>VB Mall &amp; Cinemas</h3><p class="x-tour__place">📍 Triprayar, Thrissur</p>
+                  <span class="x-tour__acts"><span class="x-btn x-btn--on">Open in Google Maps ↗</span><button class="x-btn x-tour__peek" type="button" onclick="event.preventDefault();event.stopPropagation();xOpenTour(3)">Preview here</button></span></div>
+              </a>
+              <a class="x-card x-tour" href="https://www.google.com/maps/@10.4772803,76.1154209,3a,75y,0h,90t/data=!3m6!1e1!3m4!1sCIABIhC36IOlCx72n8orcbwDL-Kt!2e10!7i8000!8i4000" target="_blank" rel="noopener" data-cat="Malls &amp; Cinema" data-place="Thrissur" data-embed="https://www.google.com/maps/embed?pb=!4v1730000000000!6m8!1m7!1sCIABIhC36IOlCx72n8orcbwDL-Kt!2m2!1d10.4772803!2d76.1154209!3f0!4f0!5f0.7820865974627469" data-tilt>
+                <div class="x-cover"><img class="x-cover__img" src="t05.jpg" alt="360° preview of Simla Mall" loading="lazy" /><img class="x-cover__pano" src="p05.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><canvas class="x-cover__gl" aria-hidden="true"></canvas><span class="x-360"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/></svg>360°</span><span class="x-ring"><span>360°</span></span></div>
+                <div class="x-tour__body"><span class="x-tag" style="align-self:flex-start">Malls &amp; Cinema</span><h3>Simla Mall</h3><p class="x-tour__place">📍 Thrissur</p>
+                  <span class="x-tour__acts"><span class="x-btn x-btn--on">Open in Google Maps ↗</span><button class="x-btn x-tour__peek" type="button" onclick="event.preventDefault();event.stopPropagation();xOpenTour(4)">Preview here</button></span></div>
+              </a>
+              <a class="x-card x-tour" href="https://www.google.com/maps/@10.5117258,76.0913028,3a,75y,281.24h,90.11t/data=!3m6!1e1!3m4!1sCIABIhBBabyuL6BMHCIHRgBsZJbM!2e10!7i8000!8i4000" target="_blank" rel="noopener" data-cat="Malls &amp; Cinema" data-place="Enamavu, Thrissur" data-embed="https://www.google.com/maps/embed?pb=!4v1730000000000!6m8!1m7!1sCIABIhBBabyuL6BMHCIHRgBsZJbM!2m2!1d10.5117258!2d76.0913028!3f281.24!4f0.11!5f0.7820865974627469" data-tilt>
+                <div class="x-cover"><img class="x-cover__img" src="t06.jpg" alt="360° preview of Nandanam Regency" loading="lazy" /><img class="x-cover__pano" src="p06.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><canvas class="x-cover__gl" aria-hidden="true"></canvas><span class="x-360"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/></svg>360°</span><span class="x-ring"><span>360°</span></span></div>
+                <div class="x-tour__body"><span class="x-tag" style="align-self:flex-start">Malls &amp; Cinema</span><h3>Nandanam Regency</h3><p class="x-tour__place">📍 Enamavu, Thrissur</p>
+                  <span class="x-tour__acts"><span class="x-btn x-btn--on">Open in Google Maps ↗</span><button class="x-btn x-tour__peek" type="button" onclick="event.preventDefault();event.stopPropagation();xOpenTour(5)">Preview here</button></span></div>
+              </a>
+              <a class="x-card x-tour" href="https://www.google.com/maps/@10.4727493,76.1067848,3a,75y,100h,90t/data=!3m6!1e1!3m4!1sCIABIhBYlqUfhBQUXIqkP97_V9hk!2e10!7i8000!8i4000" target="_blank" rel="noopener" data-cat="Places of Worship" data-place="Karamuck, Manalur" data-embed="https://www.google.com/maps/embed?pb=!4v1730000000000!6m8!1m7!1sCIABIhBYlqUfhBQUXIqkP97_V9hk!2m2!1d10.4727493!2d76.1067848!3f100!4f0!5f0.7820865974627469" data-tilt>
+                <div class="x-cover"><img class="x-cover__img" src="t07.jpg" alt="360° preview of St. John The Baptist Church" loading="lazy" /><img class="x-cover__pano" src="p07.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><canvas class="x-cover__gl" aria-hidden="true"></canvas><span class="x-360"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/></svg>360°</span><span class="x-ring"><span>360°</span></span></div>
+                <div class="x-tour__body"><span class="x-tag" style="align-self:flex-start">Places of Worship</span><h3>St. John The Baptist Church</h3><p class="x-tour__place">📍 Karamuck, Manalur</p>
+                  <span class="x-tour__acts"><span class="x-btn x-btn--on">Open in Google Maps ↗</span><button class="x-btn x-tour__peek" type="button" onclick="event.preventDefault();event.stopPropagation();xOpenTour(6)">Preview here</button></span></div>
+              </a>
+              <a class="x-card x-tour" href="https://www.google.com/maps/@10.4218457,76.132218,3a,75y,340h,90t/data=!3m6!1e1!3m4!1sCIABIhDdq6bdVwsbFZ73zKL1h5BD!2e10!7i8000!8i4000" target="_blank" rel="noopener" data-cat="Places of Worship" data-place="Kizhakkummuri, Thrissur" data-embed="https://www.google.com/maps/embed?pb=!4v1730000000000!6m8!1m7!1sCIABIhDdq6bdVwsbFZ73zKL1h5BD!2m2!1d10.4218457!2d76.132218!3f340!4f0!5f0.7820865974627469" data-tilt>
+                <div class="x-cover"><img class="x-cover__img" src="t08.jpg" alt="360° preview of Kanadi Kavu Sree Vishnumaya Temple" loading="lazy" /><img class="x-cover__pano" src="p08.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><canvas class="x-cover__gl" aria-hidden="true"></canvas><span class="x-360"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/></svg>360°</span><span class="x-ring"><span>360°</span></span></div>
+                <div class="x-tour__body"><span class="x-tag" style="align-self:flex-start">Places of Worship</span><h3>Kanadi Kavu Sree Vishnumaya Temple</h3><p class="x-tour__place">📍 Kizhakkummuri, Thrissur</p>
+                  <span class="x-tour__acts"><span class="x-btn x-btn--on">Open in Google Maps ↗</span><button class="x-btn x-tour__peek" type="button" onclick="event.preventDefault();event.stopPropagation();xOpenTour(7)">Preview here</button></span></div>
+              </a>
+              <a class="x-card x-tour" href="https://www.google.com/maps/@12.9140389,77.7109137,3a,75y,100h,90t/data=!3m6!1e1!3m4!1sCIABIhD6c2P-dIMbdTxzbvzOvNjD!2e10!7i8000!8i4000" target="_blank" rel="noopener" data-cat="Places of Worship" data-place="Bengaluru" data-embed="https://www.google.com/maps/embed?pb=!4v1730000000000!6m8!1m7!1sCIABIhD6c2P-dIMbdTxzbvzOvNjD!2m2!1d12.9140389!2d77.7109137!3f100!4f0!5f0.7820865974627469" data-tilt>
+                <div class="x-cover"><img class="x-cover__img" src="t09.jpg" alt="360° preview of Mount Carmel Forane Church" loading="lazy" /><img class="x-cover__pano" src="p09.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><canvas class="x-cover__gl" aria-hidden="true"></canvas><span class="x-360"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/></svg>360°</span><span class="x-ring"><span>360°</span></span></div>
+                <div class="x-tour__body"><span class="x-tag" style="align-self:flex-start">Places of Worship</span><h3>Mount Carmel Forane Church</h3><p class="x-tour__place">📍 Bengaluru</p>
+                  <span class="x-tour__acts"><span class="x-btn x-btn--on">Open in Google Maps ↗</span><button class="x-btn x-tour__peek" type="button" onclick="event.preventDefault();event.stopPropagation();xOpenTour(8)">Preview here</button></span></div>
+              </a>
+              <a class="x-card x-tour" href="https://www.google.com/maps/@10.3015912,76.338121,3a,75y,320h,90t/data=!3m6!1e1!3m4!1sCIABIhC2pzm9lHqtERjeLITlZFLW!2e10!7i8000!8i4000" target="_blank" rel="noopener" data-cat="Shops" data-place="Chalakudy" data-embed="https://www.google.com/maps/embed?pb=!4v1730000000000!6m8!1m7!1sCIABIhC2pzm9lHqtERjeLITlZFLW!2m2!1d10.3015912!2d76.338121!3f320!4f0!5f0.7820865974627469" data-tilt>
+                <div class="x-cover"><img class="x-cover__img" src="t10.jpg" alt="360° preview of Ukkrans Home Appliances" loading="lazy" /><img class="x-cover__pano" src="p10.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><canvas class="x-cover__gl" aria-hidden="true"></canvas><span class="x-360"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/></svg>360°</span><span class="x-ring"><span>360°</span></span></div>
+                <div class="x-tour__body"><span class="x-tag" style="align-self:flex-start">Shops</span><h3>Ukkrans Home Appliances</h3><p class="x-tour__place">📍 Chalakudy</p>
+                  <span class="x-tour__acts"><span class="x-btn x-btn--on">Open in Google Maps ↗</span><button class="x-btn x-tour__peek" type="button" onclick="event.preventDefault();event.stopPropagation();xOpenTour(9)">Preview here</button></span></div>
+              </a>
+              <a class="x-card x-tour" href="https://www.google.com/maps/@12.9116159,77.7064971,3a,75y,64.55h,80.87t/data=!3m6!1e1!3m4!1sCIABIhBiH7uxMVXH-VwcciuiepBF!2e10!7i8000!8i4000" target="_blank" rel="noopener" data-cat="Restaurant" data-place="Bengaluru" data-embed="https://www.google.com/maps/embed?pb=!4v1730000000000!6m8!1m7!1sCIABIhBiH7uxMVXH-VwcciuiepBF!2m2!1d12.9116159!2d77.7064971!3f64.55!4f-9.13!5f0.7820865974627469" data-tilt>
+                <div class="x-cover"><img class="x-cover__img" src="t11.jpg" alt="360° preview of Chettais Family Restaurant" loading="lazy" /><img class="x-cover__pano" src="p11.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><canvas class="x-cover__gl" aria-hidden="true"></canvas><span class="x-360"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/></svg>360°</span><span class="x-ring"><span>360°</span></span></div>
+                <div class="x-tour__body"><span class="x-tag" style="align-self:flex-start">Restaurant</span><h3>Chettais Family Restaurant</h3><p class="x-tour__place">📍 Bengaluru</p>
+                  <span class="x-tour__acts"><span class="x-btn x-btn--on">Open in Google Maps ↗</span><button class="x-btn x-tour__peek" type="button" onclick="event.preventDefault();event.stopPropagation();xOpenTour(10)">Preview here</button></span></div>
+              </a>
+              <a class="x-card x-tour" href="https://www.google.com/maps/@12.9129736,77.7018038,3a,75y,0h,110t/data=!3m6!1e1!3m4!1sCIABIhA7zYR7Pc8axyiUJqJKLgPu!2e10!7i8000!8i4000" target="_blank" rel="noopener" data-cat="Apartments &amp; Residential" data-place="Bengaluru" data-embed="https://www.google.com/maps/embed?pb=!4v1730000000000!6m8!1m7!1sCIABIhA7zYR7Pc8axyiUJqJKLgPu!2m2!1d12.9129736!2d77.7018038!3f0!4f20!5f0.7820865974627469" data-tilt>
+                <div class="x-cover"><img class="x-cover__img" src="t12.jpg" alt="360° preview of Myna Homes" loading="lazy" /><img class="x-cover__pano" src="p12.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><canvas class="x-cover__gl" aria-hidden="true"></canvas><span class="x-360"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/></svg>360°</span><span class="x-ring"><span>360°</span></span></div>
+                <div class="x-tour__body"><span class="x-tag" style="align-self:flex-start">Apartments &amp; Residential</span><h3>Myna Homes</h3><p class="x-tour__place">📍 Bengaluru</p>
+                  <span class="x-tour__acts"><span class="x-btn x-btn--on">Open in Google Maps ↗</span><button class="x-btn x-tour__peek" type="button" onclick="event.preventDefault();event.stopPropagation();xOpenTour(11)">Preview here</button></span></div>
+              </a>
+              <a class="x-card x-tour" href="https://www.google.com/maps/@10.4393961,76.0889958,3a,75y,97.63h,72.73t/data=!3m6!1e1!3m4!1sCIABIhA_vnLiV--6X0T6CPXqyhtZ!2e10!7i8000!8i4000" target="_blank" rel="noopener" data-cat="Apartments &amp; Residential" data-place="Thrissur" data-embed="https://www.google.com/maps/embed?pb=!4v1730000000000!6m8!1m7!1sCIABIhA_vnLiV--6X0T6CPXqyhtZ!2m2!1d10.4393961!2d76.0889958!3f97.63!4f-17.27!5f0.7820865974627469" data-tilt>
+                <div class="x-cover"><img class="x-cover__img" src="t13.jpg" alt="360° preview of Soho Beach Villa (Residential)" loading="lazy" /><img class="x-cover__pano" src="p13.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><canvas class="x-cover__gl" aria-hidden="true"></canvas><span class="x-360"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/></svg>360°</span><span class="x-ring"><span>360°</span></span></div>
+                <div class="x-tour__body"><span class="x-tag" style="align-self:flex-start">Apartments &amp; Residential</span><h3>Soho Beach Villa (Residential)</h3><p class="x-tour__place">📍 Thrissur</p>
+                  <span class="x-tour__acts"><span class="x-btn x-btn--on">Open in Google Maps ↗</span><button class="x-btn x-tour__peek" type="button" onclick="event.preventDefault();event.stopPropagation();xOpenTour(12)">Preview here</button></span></div>
+              </a>
+              <a class="x-card x-tour" href="https://www.google.com/maps/@10.5238461,76.0902634,3a,75y,294.02h,77.11t/data=!3m6!1e1!3m4!1sCIABIhBwzoVW97RvWE6dyuxE-0xw!2e10!7i10000!8i5000" target="_blank" rel="noopener" data-cat="Shops" data-place="Enamakkal, Thrissur" data-embed="https://www.google.com/maps/embed?pb=!4v1730000000000!6m8!1m7!1sCIABIhBwzoVW97RvWE6dyuxE-0xw!2m2!1d10.5238461!2d76.0902634!3f294.02!4f-12.89!5f0.7820865974627469" data-tilt>
+                <div class="x-cover"><img class="x-cover__img" src="t14.jpg" alt="360° preview of Feather Ladies Wear" loading="lazy" /><img class="x-cover__pano" src="p14.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><canvas class="x-cover__gl" aria-hidden="true"></canvas><span class="x-360"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/></svg>360°</span><span class="x-ring"><span>360°</span></span></div>
+                <div class="x-tour__body"><span class="x-tag" style="align-self:flex-start">Shops</span><h3>Feather Ladies Wear</h3><p class="x-tour__place">📍 Enamakkal, Thrissur</p>
+                  <span class="x-tour__acts"><span class="x-btn x-btn--on">Open in Google Maps ↗</span><button class="x-btn x-tour__peek" type="button" onclick="event.preventDefault();event.stopPropagation();xOpenTour(13)">Preview here</button></span></div>
+              </a>
+              <a class="x-card x-tour" href="https://www.google.com/maps/@10.5241306,76.0900883,3a,75y,0h,110t/data=!3m6!1e1!3m4!1sCIABIhBCWGTZZU_3BV7-tTz0UWmi!2e10!7i8000!8i4000" target="_blank" rel="noopener" data-cat="Shops" data-place="Enamakkal, Thrissur" data-embed="https://www.google.com/maps/embed?pb=!4v1730000000000!6m8!1m7!1sCIABIhBCWGTZZU_3BV7-tTz0UWmi!2m2!1d10.5241306!2d76.0900883!3f0!4f20!5f0.7820865974627469" data-tilt>
+                <div class="x-cover"><img class="x-cover__img" src="t15.jpg" alt="360° preview of Safar Bakes" loading="lazy" /><img class="x-cover__pano" src="p15.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><canvas class="x-cover__gl" aria-hidden="true"></canvas><span class="x-360"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/></svg>360°</span><span class="x-ring"><span>360°</span></span></div>
+                <div class="x-tour__body"><span class="x-tag" style="align-self:flex-start">Shops</span><h3>Safar Bakes</h3><p class="x-tour__place">📍 Enamakkal, Thrissur</p>
+                  <span class="x-tour__acts"><span class="x-btn x-btn--on">Open in Google Maps ↗</span><button class="x-btn x-tour__peek" type="button" onclick="event.preventDefault();event.stopPropagation();xOpenTour(14)">Preview here</button></span></div>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="x-sec" id="spaces">
+          <div class="x-wrap">
+            <p class="x-eyebrow r">By space</p>
+            <h2 class="x-h2 r">Browse by space</h2>
+            <p class="x-sub r">Auditoriums, dining halls, pools, places of worship and more — real 360° spaces we've captured across our tours.</p>
+            <div class="x-filters x-spacechips" id="spacechips" role="group" aria-label="Filter spaces by type"></div>
+            <div class="x-tours" id="spacegrid" aria-live="polite"></div>
+            <p class="x-spacenote">A selection from 20+ completed tours. Want your space shown like this? <a href="#contact">Call</a> or <a href="https://wa.me/919048670214" target="_blank" rel="noopener">WhatsApp us</a>.</p>
+          </div>
+          <script type="application/json" id="spaces-data" src="spaces.json"></script>
+          <!-- static sources for the run-time space cards: named in markup so they are folded into the page -->
+          <div class="x-spacepanos" id="spacepanos" aria-hidden="true"><img src="s01.jpg" data-pano="s01.jpg" alt="" loading="lazy" /><img src="s02.jpg" data-pano="s02.jpg" alt="" loading="lazy" /><img src="s03.jpg" data-pano="s03.jpg" alt="" loading="lazy" /><img src="s04.jpg" data-pano="s04.jpg" alt="" loading="lazy" /><img src="s05.jpg" data-pano="s05.jpg" alt="" loading="lazy" /><img src="s06.jpg" data-pano="s06.jpg" alt="" loading="lazy" /><img src="s07.jpg" data-pano="s07.jpg" alt="" loading="lazy" /><img src="s09.jpg" data-pano="s09.jpg" alt="" loading="lazy" /><img src="s10.jpg" data-pano="s10.jpg" alt="" loading="lazy" /><img src="s11.jpg" data-pano="s11.jpg" alt="" loading="lazy" /><img src="s12.jpg" data-pano="s12.jpg" alt="" loading="lazy" /><img src="s13.jpg" data-pano="s13.jpg" alt="" loading="lazy" /><img src="s14.jpg" data-pano="s14.jpg" alt="" loading="lazy" /><img src="s15.jpg" data-pano="s15.jpg" alt="" loading="lazy" /><img src="s16.jpg" data-pano="s16.jpg" alt="" loading="lazy" /><img src="s17.jpg" data-pano="s17.jpg" alt="" loading="lazy" /><img src="s18.jpg" data-pano="s18.jpg" alt="" loading="lazy" /><img src="s20.jpg" data-pano="s20.jpg" alt="" loading="lazy" /><img src="s22.jpg" data-pano="s22.jpg" alt="" loading="lazy" /><img src="s23.jpg" data-pano="s23.jpg" alt="" loading="lazy" /><img src="s24.jpg" data-pano="s24.jpg" alt="" loading="lazy" /><img src="s25.jpg" data-pano="s25.jpg" alt="" loading="lazy" /><img src="s26.jpg" data-pano="s26.jpg" alt="" loading="lazy" /><img src="s27.jpg" data-pano="s27.jpg" alt="" loading="lazy" /><img src="s28.jpg" data-pano="s28.jpg" alt="" loading="lazy" /><img src="s29.jpg" data-pano="s29.jpg" alt="" loading="lazy" /><img src="s30.jpg" data-pano="s30.jpg" alt="" loading="lazy" /><img src="s31.jpg" data-pano="s31.jpg" alt="" loading="lazy" /><img src="s32.jpg" data-pano="s32.jpg" alt="" loading="lazy" /><img src="s33.jpg" data-pano="s33.jpg" alt="" loading="lazy" /><img src="s34.jpg" data-pano="s34.jpg" alt="" loading="lazy" /><img src="s35.jpg" data-pano="s35.jpg" alt="" loading="lazy" /><img src="s36.jpg" data-pano="s36.jpg" alt="" loading="lazy" /><img src="s37.jpg" data-pano="s37.jpg" alt="" loading="lazy" /></div>
+        </section>
+
+        <section class="x-sec" id="industries">
+          <div class="x-wrap">
+            <p class="x-eyebrow r">Industries</p>
+            <h2 class="x-h2 r">Six kinds of business, <span class="x-grad">already on the map.</span></h2>
+            <p class="x-sub r" style="margin-bottom:26px">Tap a category to see its tours.</p>
+            <div class="x-tiles" id="tiles"></div>
+            <p class="r" style="margin-top:30px;color:var(--dim);font-size:14px">We also shoot:</p>
+            <div class="x-chips r">
+              <span class="x-tag">Schools</span><span class="x-tag">Colleges</span><span class="x-tag">Hospitals</span><span class="x-tag">Bars</span><span class="x-tag">Auditoriums &amp; Halls</span><span class="x-tag">Showrooms</span><span class="x-tag">Gyms</span><span class="x-tag">Clinics</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="x-sec" id="process">
+          <div class="x-wrap">
+            <p class="x-eyebrow r">How it works</p>
+            <h2 class="x-h2 r">From one call to <span class="x-grad">live on Google Maps.</span></h2>
+            <div class="x-proc" style="margin-top:30px">
+              <img class="r" src="camera.png" alt="A 360° camera on a monopod in a mall atrium" data-parallax="0.06" />
+              <div class="x-track" id="track">
+                <div class="x-track__fill" id="trackfill"></div>
+                <div class="x-step r"><em>Step 1</em><b>Book a slot</b><span>Call or WhatsApp us to pick a date.</span></div>
+                <div class="x-step r"><em>Step 2</em><b>Shoot day</b><span>2–3 hours, at a quiet time, with no disruption.</span></div>
+                <div class="x-step r"><em>Step 3</em><b>Stitch, edit &amp; publish</b><span>We publish the tour to your Google Business Profile.</span></div>
+                <div class="x-step r"><em>Step 4</em><b>Go live</b><span>On Google Maps &amp; Search — then share it everywhere.</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="x-sec" id="faq">
+          <div class="x-wrap" style="max-width:860px">
+            <p class="x-eyebrow r">FAQ</p>
+            <h2 class="x-h2 r">Questions owners ask us.</h2>
+            <div class="x-faq" style="margin-top:24px">
+              <div class="x-card x-item r"><button class="x-q" type="button" aria-expanded="false">How long does the shoot take?</button><div class="x-a"><div><p>Usually 2–3 hours depending on the size of the space; we schedule it at a quiet time.</p></div></div></div>
+              <div class="x-card x-item r"><button class="x-q" type="button" aria-expanded="false">Will it disturb my customers or staff?</button><div class="x-a"><div><p>No. We work around your schedule — early mornings or off-peak hours.</p></div></div></div>
+              <div class="x-card x-item r"><button class="x-q" type="button" aria-expanded="false">Where will the tour appear?</button><div class="x-a"><div><p>On your Google Business Profile, visible on Google Maps and Google Search, and it can be embedded on your website.</p></div></div></div>
+              <div class="x-card x-item r"><button class="x-q" type="button" aria-expanded="false">Can I use it in my marketing?</button><div class="x-a"><div><p>Yes — share the link on WhatsApp and social media, and print a QR code on brochures and at reception.</p></div></div></div>
+              <div class="x-card x-item r"><button class="x-q" type="button" aria-expanded="false">Where do you shoot?</button><div class="x-a"><div><p>Anywhere. We travel to your property — across Kerala, India and beyond — and handle everything from shoot to Google Maps publishing.</p></div></div></div>
+              <div class="x-card x-item r"><button class="x-q" type="button" aria-expanded="false">What does it cost?</button><div class="x-a"><div><p>Pricing depends on the size and number of scenes — call us for a quick quote.</p></div></div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="x-sec x-contact" id="contact">
+          <div class="x-wrap" style="max-width:920px">
+            <img class="x-biglogo r" src="logo.png" alt="Master's Technologies Digital 360" />
+            <h2 class="x-h2 r" style="font-size:clamp(30px,5.4vw,52px);text-shadow:0 0 40px rgba(0,225,255,.35)">Ready to show the world <span class="x-grad">what's inside?</span></h2>
+            <p class="x-sub r" style="margin:0 auto">Call or WhatsApp to book your shoot.</p>
+            <div class="x-cards2 x-cards3">
+              <div class="x-card x-person r">
+                <span class="x-pulse"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.5 3.5h3l1.5 4-2 1.4a12 12 0 0 0 5.6 5.6l1.4-2 4 1.5v3c0 1-.8 1.7-1.8 1.6C10.3 18.9 5.1 13.7 4.9 5.3c0-1 .7-1.8 1.6-1.8Z"/></svg></span>
+                <b>Joseph Tholath</b>
+                <span class="x-num">90486 70214</span>
+                <div class="x-row"><a class="x-btn x-btn--on" href="tel:+919048670214">Call</a><a class="x-btn" href="https://wa.me/919048670214" target="_blank" rel="noopener">WhatsApp</a></div>
+              </div>
+              <div class="x-card x-person r">
+                <span class="x-pulse" style="animation-delay:1.2s"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.5 3.5h3l1.5 4-2 1.4a12 12 0 0 0 5.6 5.6l1.4-2 4 1.5v3c0 1-.8 1.7-1.8 1.6C10.3 18.9 5.1 13.7 4.9 5.3c0-1 .7-1.8 1.6-1.8Z"/></svg></span>
+                <b>Jinson Joseph</b>
+                <span class="x-num">97450 88236</span>
+                <div class="x-row"><a class="x-btn x-btn--on" href="tel:+919745088236">Call</a><a class="x-btn" href="https://wa.me/919745088236" target="_blank" rel="noopener">WhatsApp</a></div>
+              </div>
+              <div class="x-card x-person x-mail r">
+                <span class="x-pulse" style="animation-delay:.6s"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="m3.5 7 8.5 6.5L20.5 7"/></svg></span>
+                <b>Email</b>
+                <span class="x-addr">masterstechnology2025@gmail.com</span>
+                <div class="x-row"><a class="x-btn x-btn--on" href="mailto:masterstechnology2025@gmail.com">Email Us</a></div>
+              </div>
+            </div>
+            <div class="x-card r" style="margin-top:16px;padding:20px 24px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;text-align:left;border-radius:20px">
+              <span>📍 Kandassankadavu, Thrissur, Kerala</span>
+              <a class="x-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Kandassankadavu%2C%20Thrissur%2C%20Kerala" target="_blank" rel="noopener">Get directions</a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="x-foot">
+        <div class="x-wrap x-foot__in">
+          <a class="x-logo" href="#top"><img src="logo.png" alt="Master's Technologies Digital 360 logo" /><span>Master's Technologies<small>Digital 360</small></span></a>
+          <p>© 2026 Master's Technologies · Digital 360 · Google Trusted Agency</p>
+          <a class="x-footmail" href="mailto:masterstechnology2025@gmail.com">masterstechnology2025@gmail.com</a>
+          <nav aria-label="Quick links">
+            <a href="#tours">Tours</a><a href="#spaces">Spaces</a><a href="#why">Why 360°</a><a href="#industries">Industries</a><a href="#process">Process</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
+          </nav>
+        </div>
+      </footer>
+
+      <a class="x-wa" href="https://wa.me/919048670214" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 2a8 8 0 1 1-4.1 14.9l-.3-.2-2.6.7.7-2.5-.2-.3A8 8 0 0 1 12 4Zm-3 4c-.3 0-.7.1-1 .5s-1 1-1 2.4 1 2.8 1.2 3 2 3.2 5 4.4c2.5 1 3 .8 3.5.8.6-.1 1.8-.8 2-1.5.3-.8.3-1.4.2-1.5l-.9-.4-1.6-.8c-.2-.1-.4-.1-.6.2l-.8 1c-.2.2-.3.3-.6.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4 0-.5.2-.7l.5-.6.3-.5v-.5l-.8-1.9c-.2-.5-.4-.5-.6-.5h-.6Z"/></svg>
+      </a>
+
+      <div class="x-modal" id="modal" role="dialog" aria-modal="true" aria-label="360° virtual tour"></div>
+    </div>
+    <script src="hark.js"></script>
+    <script id="site">
+      (function () {
+        var RM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var HOVER = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+        /* hero corner logo: plays only while the hero is visible; still frame under reduced motion */
+        (function () {
+          var v = document.getElementById("herologo"), hero = document.getElementById("hero");
+          if (!v) return;
+          v.muted = true;
+          if (RM) {
+            v.removeAttribute("autoplay"); v.pause();
+            var still = function () { try { v.currentTime = 0; } catch (e) {} v.pause(); };
+            if (v.readyState >= 1) still(); else v.addEventListener("loadedmetadata", still, { once: true });
+            return;
+          }
+          function play() { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+          if ("IntersectionObserver" in window && hero) {
+            new IntersectionObserver(function (es) { if (es[0].isIntersecting && !document.hidden) play(); else v.pause(); }).observe(hero);
+          }
+          document.addEventListener("visibilitychange", function () { if (document.hidden) v.pause(); });
+        })();
+        var E = "https://www.google.com/maps/embed?pb=!4v1730000000000!6m8!1m7!1s";
+        var CATS = {
+          "Hotels & Resorts": { g: "linear-gradient(135deg,#0b6e8a,#2a2f9e 60%,#6b2bbf)", i: '<path d="M3 20V9l9-5 9 5v11"/><path d="M8 20v-6h8v6M3 20h18"/>' },
+          "Malls & Cinema": { g: "linear-gradient(135deg,#7a1fa8,#3a2ab8 55%,#0a8fb3)", i: '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="m3 10 18 0M7 6l2-3M13 6l2-3"/>' },
+          "Places of Worship": { g: "linear-gradient(135deg,#1b3d8f,#5a2bb0 55%,#b44cff)", i: '<path d="M12 2v5M10 4h4M6 21V11l6-4 6 4v10"/><path d="M10 21v-5h4v5M3 21h18"/>' },
+          "Shops": { g: "linear-gradient(135deg,#006d7d,#00a6c4 50%,#3a3fb5)", i: '<path d="M4 7h16l-1.5 12h-13L4 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/>' },
+          "Restaurant": { g: "linear-gradient(135deg,#8a1f7a,#b44cff 55%,#2c5fd6)", i: '<path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 2-2 6 0 8v10"/>' },
+          "Apartments & Residential": { g: "linear-gradient(135deg,#14306e,#0a8bb0 55%,#00e1ff)", i: '<rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2M11 21v-3h2v3"/>' }
+        };
+        /* tours come from the static cards: name, place, category, embed, pano_url */
+        var TOURS = [].slice.call(document.querySelectorAll("#tourgrid .x-tour")).map(function (c) {
+          return { name: c.querySelector("h3").textContent, place: c.getAttribute("data-place"), cat: c.getAttribute("data-cat"), maps: c.getAttribute("href"), embed: c.getAttribute("data-embed") };
+        });
+        function $(s, r) { return (r || document).querySelector(s); }
+        function $$(s, r) { return [].slice.call((r || document).querySelectorAll(s)); }
+        function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+        function svg(p, n) { return '<svg width="' + n + '" height="' + n + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">' + p + "</svg>"; }
+
+        /* headline words */
+        var h1 = $("#heroh1"), parts = [], k = 0;
+        [].slice.call(h1.childNodes).forEach(function (n) {
+          if (n.nodeType === 3) n.textContent.split(/(\s+)/).forEach(function (w) { parts.push(/^\s*$/.test(w) ? w : '<span class="x-word">' + esc(w) + "</span>"); });
+          else parts.push('<span class="x-word x-grad">' + esc(n.textContent) + "</span>");
+        });
+        h1.innerHTML = parts.join("");
+        $$(".x-word", h1).forEach(function (w) { w.style.animationDelay = 0.25 + k++ * 0.08 + "s"; });
+
+        /* tour cards */
+        var grid = $("#tourgrid");
+        $$(".x-tour", grid).forEach(function (c) { $(".x-cover", c).style.backgroundImage = CATS[c.getAttribute("data-cat")].g; });
+
+        /* filters + tiles */
+        var names = Object.keys(CATS), fbox = $("#filters"), cards = $$(".x-tour", grid);
+        fbox.innerHTML = ["All"].concat(names).map(function (n, i) { return '<button class="x-pill' + (i ? "" : " is-on") + '" type="button" aria-pressed="' + (i ? "false" : "true") + '" data-f="' + esc(n) + '">' + esc(n) + "</button>"; }).join("");
+        function filter(f) {
+          $$(".x-pill", fbox).forEach(function (b) { var on = b.getAttribute("data-f") === f; b.classList.toggle("is-on", on); b.setAttribute("aria-pressed", on); });
+          var n = 0;
+          cards.forEach(function (c) {
+            var show = f === "All" || c.getAttribute("data-cat") === f;
+            c.classList.remove("is-in");
+            c.classList.toggle("is-out", !show);
+            if (show) { void c.offsetWidth; c.style.animationDelay = n++ * 0.06 + "s"; c.classList.add("is-in"); }
+          });
+          widen();
+        }
+        /* mark the last visible card when the visible count is odd (used by the 2-column layout) */
+        function widen() {
+          var vis = cards.filter(function (c) { return !c.classList.contains("is-out"); });
+          cards.forEach(function (c) { c.classList.remove("x-tour--wide"); });
+          if (vis.length % 2 && vis.length > 1) vis[vis.length - 1].classList.add("x-tour--wide");
+        }
+        widen();
+        fbox.addEventListener("click", function (e) { var b = e.target.closest(".x-pill"); if (b) filter(b.getAttribute("data-f")); });
+        $("#tiles").innerHTML = names.map(function (n) {
+          var count = TOURS.filter(function (t) { return t.cat === n; }).length;
+          return '<button class="x-card x-tile r" type="button" data-cat="' + esc(n) + '" data-tilt><span class="x-ico">' + svg(CATS[n].i, 24) + "</span><b>" + esc(n) + "</b><em>" + count + (count === 1 ? " project" : " projects") + "</em></button>";
+        }).join("");
+        $("#tiles").addEventListener("click", function (e) {
+          var t = e.target.closest(".x-tile"); if (!t) return;
+          filter(t.getAttribute("data-cat"));
+          $("#filters").scrollIntoView({ behavior: RM ? "auto" : "smooth", block: "start" });
+        });
+
+        /* modal */
+        var modal = $("#modal"), cur = 0, lastFocus = null, SET = TOURS;
+        function render() {
+          var t = SET[cur];
+          modal.innerHTML = '<div class="x-modal__box"><div class="x-modal__head"><div><h3>' + esc(t.name) + '</h3><p class="x-tour__place">📍 ' + esc(t.place) + " · " + esc(t.cat) + '</p></div>' +
+            '<button class="x-iconbtn x-modal__close" type="button" data-x aria-label="Close">✕</button></div>' +
+            '<iframe title="' + esc(t.name) + ' 360° virtual tour" src="' + t.embed + '" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>' +
+            '<div class="x-modal__foot"><a class="x-btn x-btn--on" href="' + t.maps + '" target="_blank" rel="noopener">Open in Google Maps</a>' +
+            '<span class="x-tour__place">Tour not loading? Open it in Google Maps.</span>' +
+            '<span style="margin-left:auto;display:flex;gap:8px"><button class="x-iconbtn" type="button" data-p aria-label="Previous tour">←</button><button class="x-iconbtn" type="button" data-n aria-label="Next tour">→</button></span></div></div>';
+        }
+        function open(i, set) { lastFocus = document.activeElement; SET = set || TOURS; cur = i; render(); modal.classList.add("is-open"); document.body.style.overflow = "hidden"; $("[data-x]", modal).focus(); }
+        function close() { modal.classList.remove("is-open"); modal.innerHTML = ""; document.body.style.overflow = ""; if (lastFocus) lastFocus.focus(); }
+        function step(d) { cur = (cur + d + SET.length) % SET.length; render(); $("[data-x]", modal).focus(); }
+        window.xOpenTour = function (i) { open(i); };
+        modal.addEventListener("click", function (e) {
+          if (e.target === modal || e.target.closest("[data-x]")) close();
+          else if (e.target.closest("[data-p]")) step(-1);
+          else if (e.target.closest("[data-n]")) step(1);
+        });
+        document.addEventListener("keydown", function (e) {
+          if (!modal.classList.contains("is-open")) return;
+          if (e.key === "Escape") close();
+          if (e.key === "ArrowRight") step(1);
+          if (e.key === "ArrowLeft") step(-1);
+        });
+
+        /* reveal with stagger */
+        var io = new IntersectionObserver(function (es) {
+          es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+        }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+        $$(".r").forEach(function (el) {
+          var sib = $$(":scope > .r", el.parentNode), i = sib.indexOf(el);
+          el.style.transitionDelay = Math.min(i, 8) * 0.08 + "s";
+          io.observe(el);
+        });
+
+        /* counters */
+        var cio = new IntersectionObserver(function (es) {
+          es.forEach(function (en) {
+            if (!en.isIntersecting) return;
+            var el = en.target, to = +el.getAttribute("data-to"), t0 = null; cio.unobserve(el);
+            var sfx = el.getAttribute("data-suffix") || "";
+            if (RM) { el.textContent = to + sfx; return; }
+            requestAnimationFrame(function tick(t) {
+              if (!t0) t0 = t; var p = Math.min((t - t0) / 1600, 1);
+              el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))) + (p >= 1 ? sfx : "");
+              if (p < 1) requestAnimationFrame(tick);
+            });
+          });
+        }, { threshold: 0.5 });
+        $$(".x-count").forEach(function (el) { cio.observe(el); });
+
+        /* flip on tap */
+        $$(".x-flip").forEach(function (f) { f.addEventListener("click", function () { var on = f.classList.toggle("is-flip"); f.setAttribute("aria-pressed", on); }); });
+
+        /* 3D tilt */
+        if (HOVER && !RM) {
+          document.addEventListener("pointermove", function (e) {
+            var c = e.target.closest && e.target.closest("[data-tilt]"); if (!c) return;
+            var r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+            c.style.transform = "perspective(900px) rotateX(" + (-y * 8) + "deg) rotateY(" + x * 10 + "deg) translateY(-4px)";
+          });
+          document.addEventListener("pointerout", function (e) {
+            var c = e.target.closest && e.target.closest("[data-tilt]");
+            if (c && !c.contains(e.relatedTarget)) c.style.transform = "";
+          });
+        }
+
+        /* FAQ */
+        $$(".x-q").forEach(function (q) {
+          q.addEventListener("click", function () {
+            var it = q.parentNode, on = !it.classList.contains("is-open");
+            it.classList.toggle("is-open", on); q.setAttribute("aria-expanded", on);
+          });
+        });
+
+        /* before/after */
+        var ba = $("#ba"), after = $("#baafter"), hd = $("#bahandle"), baDrag = false;
+        function setBA(p) { p = Math.max(4, Math.min(96, p)); after.style.clipPath = "inset(0 0 0 " + p + "%)"; hd.style.left = p + "%"; hd.setAttribute("aria-valuenow", Math.round(p)); }
+        function baMove(e) { var r = ba.getBoundingClientRect(); setBA(((e.clientX - r.left) / r.width) * 100); }
+        ba.addEventListener("pointerdown", function (e) { baDrag = true; baMove(e); ba.setPointerCapture(e.pointerId); });
+        ba.addEventListener("pointermove", function (e) { if (baDrag) baMove(e); });
+        ba.addEventListener("pointerup", function () { baDrag = false; });
+        ba.addEventListener("pointercancel", function () { baDrag = false; });
+        hd.addEventListener("keydown", function (e) {
+          var v = +hd.getAttribute("aria-valuenow");
+          if (e.key === "ArrowLeft") { setBA(v - 5); e.preventDefault(); }
+          if (e.key === "ArrowRight") { setBA(v + 5); e.preventDefault(); }
+        });
+
+        /* hero drag-to-pan */
+        var wrap = $("#herodrag");
+        /* shared equirect program + texture helpers, used by the hero, the featured panel and the card renderer */
+        function panoProg(gl) {
+          var VS = "attribute vec2 p;varying vec2 v;void main(){v=p;gl_Position=vec4(p,0.,1.);}";
+          var FS = "#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\n" +
+            "varying vec2 v;uniform sampler2D t;uniform vec3 F,R,U;uniform vec2 S;" +
+            "void main(){vec3 d=normalize(F+R*(v.x*S.x)+U*(v.y*S.y));" +
+            "float lon=atan(d.x,-d.z);float lat=asin(clamp(d.y,-1.,1.));" +
+            "vec2 uv=vec2(fract(.5+lon/6.2831853),clamp(.5-lat/3.1415927,0.,1.));gl_FragColor=texture2D(t,uv);}";
+          function sh(type, s) { var o = gl.createShader(type); gl.shaderSource(o, s); gl.compileShader(o); return gl.getShaderParameter(o, gl.COMPILE_STATUS) ? o : null; }
+          var vs = sh(gl.VERTEX_SHADER, VS), fs = sh(gl.FRAGMENT_SHADER, FS);
+          if (!vs || !fs) return null;
+          var pr = gl.createProgram(); gl.attachShader(pr, vs); gl.attachShader(pr, fs); gl.linkProgram(pr);
+          if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return null;
+          gl.useProgram(pr);
+          var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+          gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+          var loc = gl.getAttribLocation(pr, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+          return { F: gl.getUniformLocation(pr, "F"), R: gl.getUniformLocation(pr, "R"), U: gl.getUniformLocation(pr, "U"), S: gl.getUniformLocation(pr, "S") };
+        }
+        var scratch = null;
+        function panoTex(gl, src, cap) {
+          var max = gl.getParameter(gl.MAX_TEXTURE_SIZE) || 2048, img = src, w = src.naturalWidth;
+          if (!w) return null;
+          if (cap) max = Math.min(max, cap);
+          if (w > max || src.naturalHeight > max / 2) {
+            /* downscale through one reused canvas before texImage2D */
+            scratch = scratch || document.createElement("canvas");
+            scratch.width = max; scratch.height = max / 2;
+            scratch.getContext("2d").drawImage(src, 0, 0, max, max / 2); img = scratch;
+          }
+          var tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+          gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+          try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img); } catch (e) { gl.deleteTexture(tex); return null; }
+          if (gl.getError() !== gl.NO_ERROR) { gl.deleteTexture(tex); return null; }
+          return tex;
+        }
+        /* shared 360 panorama: WebGL equirectangular viewer, poster stays as fallback; returns true when running */
+        function Pano360(o) {
+          var wrap = o.wrap, cv = o.canvas, src = o.src, hero = o.area, D = Math.PI / 180;
+          var gl = null;
+          try { gl = cv.getContext("webgl", { antialias: false, alpha: false, preserveDrawingBuffer: false }) || cv.getContext("experimental-webgl"); } catch (e) { gl = null; }
+          if (!gl) return;
+          var P = panoProg(gl); if (!P) return;
+          var uF = P.F, uR = P.R, uU = P.U, uS = P.S;
+
+          var yaw = o.yaw * D, pitch = o.pitch * D, lim = 60 * D, ready = false, visible = true, dirty = true, raf = 0, last = 0, idleAt = 0;
+          var drag = null, dead = false;
+
+          function upload() { return !!panoTex(gl, src); }
+          function size() {
+            var dpr = Math.min(window.devicePixelRatio || 1, 1.5), w = Math.max(1, Math.round(wrap.clientWidth * dpr)), h = Math.max(1, Math.round(wrap.clientHeight * dpr));
+            if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; dirty = true; }
+          }
+          function draw() {
+            size();
+            var a = cv.width / cv.height, vf = (a < 1 ? 85 : 72) * D, ty = Math.tan(vf / 2), cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+            gl.viewport(0, 0, cv.width, cv.height);
+            gl.uniform3f(uF, sy * cp, sp, -cy * cp);
+            gl.uniform3f(uR, cy, 0, sy);
+            gl.uniform3f(uU, -sy * sp, cp, cy * sp);
+            gl.uniform2f(uS, ty * a, ty);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            dirty = false;
+          }
+          function loop(t) {
+            raf = 0;
+            if (dead || !ready || !visible || document.hidden) return;
+            var dt = last ? Math.min(0.1, (t - last) / 1000) : 0; last = t;
+            if (!RM && !drag && t >= idleAt) { yaw += 2.2 * D * dt; dirty = true; }
+            if (dirty) draw();
+            raf = requestAnimationFrame(loop);
+          }
+          function kick() { if (!raf && ready && visible && !document.hidden && !dead) { last = 0; raf = requestAnimationFrame(loop); } }
+          function painted() {
+            /* only reveal the canvas when it really drew the panorama; otherwise the poster stays visible */
+            try { var px = new Uint8Array(4); gl.readPixels(cv.width >> 1, cv.height >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); return gl.getError() === gl.NO_ERROR && (px[0] + px[1] + px[2]) > 0; } catch (e) { return false; }
+          }
+          function show() { if (ready && !dead) { draw(); if (painted()) cv.classList.add("is-on"); kick(); } }
+          function start() { if (ready || dead) return; if (upload()) { ready = true; show(); } }
+          if (src.complete && src.naturalWidth) start(); else src.addEventListener("load", start);
+
+          /* hard fallback: retry the texture ~1s after load */
+          function retry() { if (!ready) start(); else { size(); show(); } }
+          window.addEventListener("load", function () { setTimeout(retry, 1000); });
+
+          cv.addEventListener("webglcontextlost", function (e) { e.preventDefault(); dead = true; cv.classList.remove("is-on"); });
+          if ("ResizeObserver" in window) new ResizeObserver(function () { dirty = true; if (ready) { size(); draw(); } kick(); }).observe(wrap);
+          if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; kick(); }).observe(hero);
+          document.addEventListener("visibilitychange", kick);
+          window.addEventListener("resize", function () { dirty = true; kick(); });
+
+          function hold() { idleAt = performance.now() + 4000; }
+          wrap.addEventListener("pointerdown", function (e) {
+            if (e.button && e.button !== 0) return;
+            drag = { id: e.pointerId, x: e.clientX, y: e.clientY, touch: e.pointerType !== "mouse", ok: e.pointerType === "mouse" };
+            if (drag.ok) { wrap.classList.add("is-drag"); try { wrap.setPointerCapture(e.pointerId); } catch (er) {} }
+            hold();
+            if (o.onInteract) o.onInteract();
+          });
+          wrap.addEventListener("pointermove", function (e) {
+            if (!drag || e.pointerId !== drag.id) return;
+            var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+            if (!drag.ok) {
+              if (Math.abs(dx) + Math.abs(dy) < 6) return;
+              if (Math.abs(dy) > Math.abs(dx)) { drag = null; return; }
+              drag.ok = true; wrap.classList.add("is-drag"); try { wrap.setPointerCapture(e.pointerId); } catch (er) {}
+            }
+            var k = (cv.clientHeight ? (cv.width / cv.height < 1 ? 85 : 72) / cv.clientHeight : 0.1) * D;
+            yaw -= dx * k; pitch = Math.max(-lim, Math.min(lim, pitch + dy * k));
+            drag.x = e.clientX; drag.y = e.clientY; dirty = true; hold(); kick();
+          });
+          function end(e) { if (drag && e.pointerId === drag.id) { drag = null; wrap.classList.remove("is-drag"); hold(); } }
+          wrap.addEventListener("pointerup", end); wrap.addEventListener("pointercancel", end);
+          return true;
+        }
+        Pano360({ wrap: wrap, canvas: $("#herogl"), src: $("#heropano"), area: $("#hero"), yaw: 10, pitch: -6 });
+        (function () {
+          var hint = $("#fpanohint");
+          function hide() { hint.classList.add("is-gone"); }
+          if (!Pano360({ wrap: $("#fpanodrag"), canvas: $("#fpanogl"), src: $("#fpanosrc"), area: $("#fpano"), yaw: 0, pitch: -10, onInteract: hide })) hint.style.display = "none";
+        })();
+
+        /* tour cards: slowly turning 360 views. ONE shared offscreen WebGL renderer draws each visible card's view,
+           then copies it into that card's own 2D canvas. Textures are cached per card. */
+        var cardPano = null; /* add/remove API for cards created at run time (Browse by space) */
+        (function () {
+          var D = Math.PI / 180, BASE = 7, FAST = 20, FOV = 85 * D, PITCH = -4 * D;
+          var root = document.documentElement;
+          function hid() { root.classList.toggle("x-hidden", document.hidden); }
+          document.addEventListener("visibilitychange", hid); hid();
+          if (RM) return; /* reduced motion: the static tNN.jpg poster stays */
+          function make(c, i) {
+            var t = { card: c, cover: $(".x-cover", c), cv: $(".x-cover__gl", c), img: $(".x-cover__pano", c) || $(".x-cover__img", c), yaw: ((i * 137.5) % 360) * D, speed: BASE, target: BASE, vis: false, tex: null, ctx: null, on: false, bad: 0, mode: "gl" };
+            c._pano = t; return t;
+          }
+          var list = cards.map(make);
+          function drop(t) { var k = list.indexOf(t); if (k > -1) list.splice(k, 1); t.card._pano = null; t.mode = "gone"; t.vis = false; t.ctx = null; t.cv.width = 0; t.cv.height = 0; }
+          function loaded(t, fn) { if (t.img.complete && t.img.naturalWidth) fn(); else t.img.addEventListener("load", fn, { once: true }); }
+          function setPW(t) { t.cover.style.setProperty("--pw", t.cover.clientHeight * 2 + "px"); }
+          /* CSS fallback: the panorama as a repeat-x background panning one full image width per loop */
+          function pan(t) {
+            t.mode = "pan";
+            loaded(t, function () {
+              setPW(t);
+              t.cv.style.backgroundImage = 'url("' + (t.img.currentSrc || t.img.src) + '")';
+              t.cv.style.animationDelay = -(t.yaw / (2 * Math.PI)) * 50 + "s";
+              t.cv.classList.add("is-pan", "is-on");
+            });
+          }
+          if ("ResizeObserver" in window) {
+            var ro = new ResizeObserver(function () { list.forEach(function (t) { if (t.mode === "pan") setPW(t); }); });
+            ro.observe(grid); if ($("#spacegrid")) ro.observe($("#spacegrid"));
+          }
+
+          var glcv = document.createElement("canvas"), gl = null, P = null, dead = false;
+          var opts = { antialias: false, alpha: false, preserveDrawingBuffer: true };
+          try { gl = glcv.getContext("webgl", opts) || glcv.getContext("experimental-webgl", opts); } catch (e) { gl = null; }
+          if (gl) P = panoProg(gl);
+          if (!gl || !P) {
+            list.forEach(pan);
+            cardPano = { add: function (c, i) { var t = make(c, i); list.push(t); pan(t); }, remove: function (c) { if (c._pano) drop(c._pano); } };
+            return;
+          }
+          glcv.addEventListener("webglcontextlost", function (e) {
+            e.preventDefault(); dead = true;
+            list.forEach(function (t) { t.cv.classList.remove("is-on"); pan(t); });
+          });
+
+          function render(t) {
+            var dpr = Math.min(window.devicePixelRatio || 1, 1.5), w = Math.max(1, Math.round(t.cover.clientWidth * dpr)), h = Math.max(1, Math.round(t.cover.clientHeight * dpr));
+            if (t.cv.width !== w || t.cv.height !== h) { t.cv.width = w; t.cv.height = h; }
+            if (glcv.width !== w || glcv.height !== h) { glcv.width = w; glcv.height = h; }
+            var a = w / h, tx = Math.tan(FOV / 2), ty = tx / a, cy = Math.cos(t.yaw), sy = Math.sin(t.yaw), cp = Math.cos(PITCH), sp = Math.sin(PITCH);
+            gl.viewport(0, 0, w, h);
+            gl.bindTexture(gl.TEXTURE_2D, t.tex);
+            gl.uniform3f(P.F, sy * cp, sp, -cy * cp);
+            gl.uniform3f(P.R, cy, 0, sy);
+            gl.uniform3f(P.U, -sy * sp, cp, cy * sp);
+            gl.uniform2f(P.S, tx, ty);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            if (!t.on) {
+              /* reveal only once the view really drew; after a few blank frames fall back to the CSS pan */
+              var px = new Uint8Array(4), ok = false;
+              try { gl.readPixels(w >> 1, h >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); ok = gl.getError() === gl.NO_ERROR && px[0] + px[1] + px[2] > 0; } catch (e) { ok = false; }
+              if (!ok) { if (++t.bad > 4) pan(t); return; }
+            }
+            t.ctx = t.ctx || t.cv.getContext("2d");
+            if (!t.ctx) { pan(t); return; }
+            t.ctx.drawImage(glcv, 0, 0);
+            if (!t.on) { t.on = true; t.cv.classList.add("is-on"); }
+          }
+
+          var raf = 0, last = 0;
+          function frame(now) {
+            raf = 0;
+            if (dead || document.hidden) return;
+            if (last && now - last < 31) { raf = requestAnimationFrame(frame); return; } /* ~30fps */
+            var dt = last ? Math.min(0.1, (now - last) / 1000) : 0, any = false; last = now;
+            list.forEach(function (t) {
+              if (t.mode !== "gl" || !t.vis || t.card.classList.contains("is-out")) return;
+              if (!t.tex) {
+                if (!(t.img.complete && t.img.naturalWidth)) { any = true; return; }
+                t.tex = panoTex(gl, t.img, 1024); /* card textures capped at 1024×512 */
+                if (!t.tex) { pan(t); return; }
+              }
+              any = true;
+              t.speed += (t.target - t.speed) * Math.min(1, dt * 2.5);
+              t.yaw += t.speed * D * dt;
+              render(t);
+            });
+            if (any) raf = requestAnimationFrame(frame);
+          }
+          function kick() { if (!raf && !dead && !document.hidden) { last = 0; raf = requestAnimationFrame(frame); } }
+
+          var vio = new IntersectionObserver(function (es) {
+            es.forEach(function (en) { var t = en.target._pano; if (t) t.vis = en.isIntersecting; });
+            kick();
+          }, { rootMargin: "40px 0px" });
+          /* free GPU textures for cards far off-screen (or filtered out); they re-upload when they come back */
+          var fio = new IntersectionObserver(function (es) {
+            es.forEach(function (en) {
+              var t = en.target._pano;
+              if (t && !en.isIntersecting && t.tex && !dead) { gl.deleteTexture(t.tex); t.tex = null; }
+            });
+          }, { rootMargin: "1200px 0px" });
+          function attach(t) {
+            vio.observe(t.card);
+            fio.observe(t.card);
+            t.img.addEventListener("load", kick);
+            if (HOVER) {
+              t.card.addEventListener("pointerenter", function () { t.target = FAST; });
+              t.card.addEventListener("pointerleave", function () { t.target = BASE; });
+            }
+          }
+          list.forEach(attach);
+          document.addEventListener("visibilitychange", kick);
+          fbox.addEventListener("click", function () { setTimeout(kick, 0); });
+          /* run-time cards: textures are created lazily in frame() once a card is visible; remove() frees the
+             GPU texture and the card's 2D canvas backing store before the card leaves the DOM */
+          cardPano = {
+            add: function (c, i) { var t = make(c, i); list.push(t); attach(t); kick(); },
+            remove: function (c) {
+              var t = c._pano; if (!t) return;
+              vio.unobserve(c); fio.unobserve(c);
+              if (t.tex && !dead) gl.deleteTexture(t.tex);
+              t.tex = null; drop(t);
+            }
+          };
+        })();
+
+        /* browse by space: chips + cards for the selected chip only, inline data from spaces.json */
+        (function () {
+          var box = $("#spacechips"), sgrid = $("#spacegrid"), dataEl = $("#spaces-data");
+          if (!box || !sgrid || !dataEl) return;
+          var SP = []; try { SP = JSON.parse(dataEl.textContent || "[]"); } catch (e) { SP = []; }
+          var CH = [["halls", "Auditoriums & Halls"], ["banquet", "Banquet & Party Halls"], ["dining", "Restaurants & Food Courts"], ["pool", "Pools"], ["gym", "Gym & Indoor Games"], ["bar", "Bars"], ["spa", "Spa & Salon"], ["rooms", "Rooms & Villas"], ["lobbies", "Lobbies & Entrances"], ["shops", "Shops & Showrooms"], ["worship", "Places of Worship"], ["outdoor", "Outdoor & Waterfront"]];
+          var ICON = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.7"/><path d="M4 12a8 8 0 0 1 13.7-5.7"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/></svg>';
+          function at(s) { return esc(String(s)).replace(/"/g, "&quot;"); }
+          /* sNN.jpg → its source as written in the static markup (a data URI once the page is folded) */
+          var SRC = {};
+          $$("#spacepanos img").forEach(function (im) { SRC[im.getAttribute("data-pano")] = im.getAttribute("src"); });
+          function srcOf(p) { return SRC[p] || p; }
+          box.innerHTML = CH.map(function (c) {
+            var n = SP.filter(function (s) { return s.chip === c[0]; }).length;
+            return '<button class="x-pill" type="button" aria-pressed="false" data-s="' + c[0] + '">' + esc(c[1]) + '<span class="x-pill__n" aria-label="' + n + ' spaces">' + n + "</span></button>";
+          }).join("");
+          var SET = [], live = [];
+          function show(key) {
+            $$(".x-pill", box).forEach(function (b) { var on = b.getAttribute("data-s") === key; b.classList.toggle("is-on", on); b.setAttribute("aria-pressed", on); });
+            /* dispose the previous cards' textures and canvases first */
+            live.forEach(function (c) { if (cardPano) cardPano.remove(c); });
+            live = [];
+            sgrid.innerHTML = "";
+            var label = CH.filter(function (c) { return c[0] === key; })[0][1];
+            var items = SP.filter(function (s) { return s.chip === key; });
+            SET = items.map(function (s) { return { name: s.label, place: s.place, cat: label, maps: s.url, embed: s.embed }; });
+            sgrid.innerHTML = items.map(function (s, i) {
+              return '<a class="x-card x-tour x-space" href="' + at(s.url) + '" target="_blank" rel="noopener" data-tilt>' +
+                '<div class="x-cover"><img class="x-cover__img" src="' + at(srcOf(s.pano)) + '" alt="360° view of the ' + at(s.label.toLowerCase()) + " at " + at(s.place) + '" decoding="async" /><canvas class="x-cover__gl" aria-hidden="true"></canvas><span class="x-360">' + ICON + "360°</span></div>" +
+                '<div class="x-tour__body"><h3>' + esc(s.label) + '</h3><p class="x-tour__place">📍 ' + esc(s.place) + "</p>" +
+                '<span class="x-tour__acts"><span class="x-btn x-btn--on">Open in Google Maps ↗</span><button class="x-btn x-tour__peek" type="button" data-i="' + i + '">Preview here</button></span></div></a>';
+            }).join("");
+            live = $$(".x-space", sgrid);
+            live.forEach(function (c, i) {
+              $(".x-cover", c).style.backgroundImage = "linear-gradient(135deg,#0b6e8a,#2a2f9e 60%,#6b2bbf)";
+              c.style.animationDelay = i * 0.06 + "s"; c.classList.add("is-in");
+              if (cardPano) cardPano.add(c, i + 3);
+            });
+            if (live.length % 2 && live.length > 1) live[live.length - 1].classList.add("x-tour--wide");
+          }
+          box.addEventListener("click", function (e) { var b = e.target.closest(".x-pill"); if (b) show(b.getAttribute("data-s")); });
+          sgrid.addEventListener("click", function (e) {
+            var b = e.target.closest(".x-tour__peek"); if (!b) return;
+            e.preventDefault(); e.stopPropagation();
+            open(+b.getAttribute("data-i"), SET);
+          });
+          show("halls");
+        })();
+
+        /* scroll: nav, parallax, active link, timeline */
+        var nav = $("#nav"), links = $$("#navlinks a"), secs = links.map(function (a) { return $(a.getAttribute("href")); });
+        var fill = $("#trackfill"), track = $("#track"), cam = $("[data-parallax]"), ticking = false;
+        function onScroll() {
+          ticking = false;
+          var y = window.scrollY, vh = window.innerHeight;
+          nav.classList.toggle("is-stuck", y > 30);
+          if (!RM && y < vh) wrap.style.translate = "0 " + y * 0.3 + "px";
+          var act = -1; secs.forEach(function (s, i) { if (s && s.getBoundingClientRect().top < vh * 0.4) act = i; });
+          links.forEach(function (a, i) { a.classList.toggle("is-active", i === act); });
+          var r = track.getBoundingClientRect(), p = Math.max(0, Math.min(1, (vh * 0.75 - r.top) / r.height));
+          fill.style.height = p * (r.height - 12) + "px";
+          if (cam && !RM) { var cr = cam.getBoundingClientRect(); cam.style.translate = "0 " + (cr.top + cr.height / 2 - vh / 2) * -0.06 + "px"; }
+        }
+        window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+        onScroll();
+
+        /* background particle grid */
+        var cv = $("#bgfx"), ctx = cv.getContext("2d"), pts = [], W, H, dpr = Math.min(window.devicePixelRatio || 1, 2);
+        function size() {
+          W = cv.width = innerWidth * dpr; H = cv.height = innerHeight * dpr;
+          cv.style.width = innerWidth + "px"; cv.style.height = innerHeight + "px";
+          var n = Math.round(Math.min(70, (innerWidth * innerHeight) / 22000));
+          pts = []; for (var i = 0; i < n; i++) pts.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.25 * dpr, vy: (Math.random() - 0.5) * 0.25 * dpr });
+        }
+        function draw() {
+          ctx.clearRect(0, 0, W, H);
+          var g = 64 * dpr, off = (window.scrollY * 0.15 * dpr) % g;
+          ctx.strokeStyle = "rgba(0,225,255,0.045)"; ctx.lineWidth = 1;
+          ctx.beginPath();
+          for (var x = 0; x < W; x += g) { ctx.moveTo(x, 0); ctx.lineTo(x, H); }
+          for (var yy = -off; yy < H; yy += g) { ctx.moveTo(0, yy); ctx.lineTo(W, yy); }
+          ctx.stroke();
+          var L = 130 * dpr;
+          for (var i = 0; i < pts.length; i++) {
+            var p = pts[i];
+            if (!RM) { p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1; }
+            for (var j = i + 1; j < pts.length; j++) {
+              var q = pts[j], d = Math.hypot(p.x - q.x, p.y - q.y);
+              if (d < L) { ctx.strokeStyle = "rgba(160,110,255," + (1 - d / L) * 0.22 + ")"; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
+            }
+            ctx.fillStyle = i % 3 ? "rgba(0,225,255,0.7)" : "rgba(180,76,255,0.7)";
+            ctx.beginPath(); ctx.arc(p.x, p.y, 1.4 * dpr, 0, 6.3); ctx.fill();
+          }
+          if (!RM && !document.hidden) requestAnimationFrame(draw);
+        }
+        size(); draw();
+        window.addEventListener("resize", function () { clearTimeout(size.t); size.t = setTimeout(function () { size(); if (RM) draw(); }, 200); });
+        document.addEventListener("visibilitychange", function () { if (!document.hidden && !RM) requestAnimationFrame(draw); });
+      })();
+    </script>
+  </body>
+</html>
